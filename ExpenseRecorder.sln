@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32516.85
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseRecorder", "ExpenseRecorder\ExpenseRecorder.csproj", "{40743F96-0AB8-41AB-BBC4-508B44526A49}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{40743F96-0AB8-41AB-BBC4-508B44526A49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40743F96-0AB8-41AB-BBC4-508B44526A49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40743F96-0AB8-41AB-BBC4-508B44526A49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40743F96-0AB8-41AB-BBC4-508B44526A49}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {00C64F52-BC67-42CF-B40D-3378C013F0A8}
+	EndGlobalSection
+EndGlobal
