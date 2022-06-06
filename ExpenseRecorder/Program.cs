@@ -64,7 +64,7 @@ builder.Services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme ).Add
 	} ;
 } ) ;
 
-//builder.Services.AddAutoMapper( typeof(UserProfile) ) ;
+builder.Services.AddAutoMapper( typeof(UserProfile) ) ;
 // add authorization
 builder.Services.AddAuthorization() ;
 
