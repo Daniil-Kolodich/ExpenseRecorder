@@ -1,6 +1,8 @@
-﻿namespace ExpenseRecorder.Models ;
+﻿using ExpenseRecorder.Models.Interfaces ;
 
-public class User
+namespace ExpenseRecorder.Models ;
+
+public class User : IEntity
 {
 	public int    Id   { get;  set; }
 	public string Name { get ; set ; } = String.Empty ;
