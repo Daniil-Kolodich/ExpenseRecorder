@@ -8,4 +8,6 @@ public class User : IEntity
 	public string Name { get ; set ; } = String.Empty ;
 	public string Email { get ; set ; } = String.Empty ;
 	public string Password { get ; set ; } = String.Empty ;
+	
+	public ICollection<Category> Categories { get ; set ; } = new List<Category>() ;
 }

@@ -64,7 +64,8 @@ builder.Services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme ).Add
 	} ;
 } ) ;
 
-builder.Services.AddAutoMapper( typeof(UserProfile) ) ;
+builder.Services.AddAutoMapper( typeof(UserProfile), typeof(CategoryProfile) ) ;
+
 // add authorization
 builder.Services.AddAuthorization() ;
 
@@ -73,8 +74,16 @@ builder.Services.AddDbContext< ExpenseRecorderContext >( context => context
 
 builder.Services.AddScoped< IUserRepository , UserRepository >() ;
 builder.Services.AddScoped< IUserService , UserService >() ;
+
+builder.Services.AddScoped< ICategoryRepository , CategoryRepository >() ;
+builder.Services.AddScoped< ICategoryService , CategoryService >() ;
+
+builder.Services.AddScoped< IAuthenticationService , AuthenticationService >() ;
+
 builder.Services.AddScoped< IUnitOfWork , UnitOfWork >() ;
 
+
+builder.Services.AddHttpContextAccessor() ;
 var app = builder.Build() ;
 
 // Configure the HTTP request pipeline.
