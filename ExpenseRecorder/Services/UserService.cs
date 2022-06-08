@@ -54,16 +54,13 @@ public class UserService : IUserService
 
 		var token = new JwtSecurityToken
 		(
-			"https://localhost:7043" ,
-			"https://localhost:7043" ,
+			issuer : Issuer ,
+			audience : Audience ,
 			claims ,
 			expires : DateTime.UtcNow.AddMinutes( 30 ) ,
 			notBefore : DateTime.UtcNow ,
 			signingCredentials : new SigningCredentials(
-				new SymmetricSecurityKey(
-					Encoding.UTF8.GetBytes(
-						"111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" ) ) ,
-				SecurityAlgorithms.HmacSha256 )
+				new SymmetricSecurityKey( Encoding.UTF8.GetBytes( SecretKey ) ) , SecurityAlgorithms.HmacSha256 )
 		) ;
 
 		var tokenString = new JwtSecurityTokenHandler().WriteToken( token ) ;

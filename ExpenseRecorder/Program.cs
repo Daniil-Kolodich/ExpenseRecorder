@@ -17,12 +17,9 @@ using Microsoft.OpenApi.Models ;
 
 var builder = WebApplication.CreateBuilder( args ) ;
 
-// Add services to the container.
-
 builder.Services.AddControllers()
 	   .AddJsonOptions( j => j.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles ) ;
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer() ;
 
 builder.Services.AddSwaggerGen( options =>
@@ -54,15 +51,10 @@ builder.Services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme ).Add
 {
 	options.TokenValidationParameters = new TokenValidationParameters
 	{
-		ValidateActor            = false ,
-		ValidateAudience         = false ,
-		ValidateIssuer           = false ,
-		ValidateLifetime         = false ,
-		ValidateIssuerSigningKey = false ,
-		ValidIssuer              = "https://localhost:7043" ,
-		ValidAudience            = "https://localhost:7043" ,
-		IssuerSigningKey = new SymmetricSecurityKey( Encoding.UTF8.GetBytes(
-			"111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" ) )
+		ValidateIssuerSigningKey = true ,
+		ValidIssuer              = UserService.Issuer ,
+		ValidAudience            = UserService.Audience ,
+		IssuerSigningKey         = new SymmetricSecurityKey( Encoding.UTF8.GetBytes( UserService.SecretKey ) )
 	} ;
 } ) ;
 
@@ -92,7 +84,6 @@ builder.Services.AddScoped< IUnitOfWork , UnitOfWork >() ;
 builder.Services.AddHttpContextAccessor() ;
 var app = builder.Build() ;
 
-// Configure the HTTP request pipeline.
 if ( app.Environment.IsDevelopment() )
 {
 	app.UseSwagger() ;
