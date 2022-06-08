@@ -1,6 +1,7 @@
 ﻿using AutoMapper ;
 using ExpenseRecorder.DTO.Requests.Category ;
 using ExpenseRecorder.DTO.Responses.Category ;
+using ExpenseRecorder.Exceptions ;
 using ExpenseRecorder.Models ;
 using ExpenseRecorder.Services.Interfaces ;
 using Microsoft.AspNetCore.Authorization ;
@@ -21,7 +22,19 @@ public class CategoryController : ControllerBase
 		_categoryService = categoryService ;
 	}
 
+	private ActionResult MapExceptionsToActionResults(Exception ex) =>
+		ex switch
+		{
+			NotFoundException nf          => NotFound( nf.Message ) ,
+			NotAuthenticatedException na  => Unauthorized( na.Message ) ,
+			PredicateMismatchException pm => Unauthorized( pm.Message ) ,
+			BadRequestException br        => BadRequest( br.Message ) ,
+			SaveContextException sc       => StatusCode( 500 , sc.Message ) ,
+			_                             => StatusCode( 500 , ex.Message )
+		} ;
+
 	[ HttpGet ]
+	[ Route( "GetAll" ) ]
 	[ Authorize ]
 	public async Task< ActionResult< IEnumerable< CategoryResponse > > > GetAll()
 	{
@@ -29,7 +42,7 @@ public class CategoryController : ControllerBase
 
 		return response.Match< ActionResult< IEnumerable< CategoryResponse > > >(
 			success => Ok( _mapper.Map< IEnumerable< CategoryResponse > >( success ) ) ,
-			failure => BadRequest( failure ) ) ;
+			failure => MapExceptionsToActionResults( failure ) ) ;
 	}
 
 	[ HttpGet ]
@@ -41,7 +54,7 @@ public class CategoryController : ControllerBase
 
 		return result.Match< ActionResult< CategoryResponse > >(
 			success => Ok( _mapper.Map< CategoryResponse >( success ) ) ,
-			failure => BadRequest( failure ) ) ;
+			failure => MapExceptionsToActionResults( failure ) ) ;
 	}
 
 	[ HttpPut ]
@@ -55,7 +68,7 @@ public class CategoryController : ControllerBase
 
 		return result.Match< ActionResult< CategoryResponse > >(
 			success => Ok( _mapper.Map< CategoryResponse >( success ) ) ,
-			failure => BadRequest( failure.ToString() ) ) ;
+			failure => MapExceptionsToActionResults( failure ) ) ;
 	}
 
 	[ HttpDelete ]
@@ -67,7 +80,7 @@ public class CategoryController : ControllerBase
 
 		return result.Match< ActionResult< CategoryResponse > >(
 			success => Ok( _mapper.Map< CategoryResponse >( success ) ) ,
-			failure => BadRequest( failure ) ) ;
+			failure => MapExceptionsToActionResults( failure ) ) ;
 	}
 
 	[ HttpPost ]
@@ -79,6 +92,6 @@ public class CategoryController : ControllerBase
 
 		return result.Match< ActionResult< CategoryResponse > >(
 			success => Ok( _mapper.Map< CategoryResponse >( success ) ) ,
-			failure => BadRequest( failure ) ) ;
+			failure => MapExceptionsToActionResults( failure ) ) ;
 	}
 }

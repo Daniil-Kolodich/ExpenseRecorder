@@ -1,4 +1,5 @@
-﻿using ExpenseRecorder.Models.Interfaces ;
+﻿using ExpenseRecorder.Exceptions ;
+using ExpenseRecorder.Models.Interfaces ;
 using ExpenseRecorder.Repositories.Interfaces ;
 using ExpenseRecorder.Services.Interfaces ;
 using ExpenseRecorder.UnitOfWork.Interfaces ;
@@ -32,9 +33,12 @@ public class BaseService < T > : IBaseService< T >
 		{
 			var result = await _repository.GetAsync( id ) ;
 
-			// TODO : replace with custom exception
-			if ( result is null ) return new Result< T >( new ArgumentException() ) ;
-			if ( predicate is not null && !predicate( result ) ) return new Result< T >( new ArgumentException() ) ;
+			if ( result is null )
+				return new Result< T >(
+					new NotFoundException( $"Unable to find {typeof(T)} with {id} to perform GetAsync" ) ) ;
+
+			if ( predicate is not null && !predicate( result ) )
+				return new Result< T >( new PredicateMismatchException( "Result doesn't fit predicate" ) ) ;
 
 			return new Result< T >( result ) ;
 		}
@@ -47,15 +51,20 @@ public class BaseService < T > : IBaseService< T >
 		{
 			var addedEntity = await _repository.AddAsync( entity ) ;
 			var result      = await _unitOfWork.SaveAsync() ;
+			
+			
+			if ( addedEntity is null )
+				return new Result< T >( new BadRequestException( $"Unable to save {typeof(T)} to perform AddAsync" ) ) ;
 
-			if ( addedEntity is null || !result ) return new Result< T >( new ArgumentException() ) ;
+			if ( !result )
+				return new Result< T >(
+					new SaveContextException( $"Unable to save {typeof(T)} to perform AddAsync" ) ) ;
 
 			return new Result< T >( addedEntity ) ;
 		}
 		catch ( Exception ex ) { return new Result< T >( ex ) ; }
 	}
 
-// TODO : Probably should add a predicate to this method
 	public virtual async Task< Result< T > > UpdateAsync(int id , T entity)
 	{
 		try
@@ -64,7 +73,13 @@ public class BaseService < T > : IBaseService< T >
 			var updatedEntity = await _repository.UpdateAsync( id , entity ) ;
 			var result        = await _unitOfWork.SaveAsync() ;
 
-			if ( updatedEntity is null || !result ) return new Result< T >( new ArgumentException() ) ;
+			if ( updatedEntity is null )
+				return new Result< T >(
+					new BadRequestException( $"Unable to find {typeof(T)} with {id} to perform UpdateAsync" ) ) ;
+
+			if ( !result )
+				return new Result< T >(
+					new SaveContextException( $"Unable to save {typeof(T)} to perform UpdateAsync" ) ) ;
 
 			return new Result< T >( updatedEntity ) ;
 		}
@@ -77,14 +92,18 @@ public class BaseService < T > : IBaseService< T >
 		{
 			var deletedEntity = await _repository.DeleteAsync( id ) ;
 
-			if ( deletedEntity is null ) return new Result< T >( new ArgumentException() ) ;
+			if ( deletedEntity is null )
+				return new Result< T >(
+					new NotFoundException( $"Unable to find {typeof(T)} with {id} to perform DeleteAsync" ) ) ;
 
 			if ( predicate is not null && !predicate( deletedEntity ) )
-				return new Result< T >( new ArgumentException() ) ;
+				return new Result< T >( new PredicateMismatchException( "Result doesn't fit predicate" ) ) ;
 
 			var result = await _unitOfWork.SaveAsync() ;
 
-			if ( !result ) return new Result< T >( new ArgumentException() ) ;
+			if ( !result )
+				return new Result< T >(
+					new SaveContextException( $"Unable to save {typeof(T)} to perform DeleteAsync" ) ) ;
 
 			return new Result< T >( deletedEntity ) ;
 		}

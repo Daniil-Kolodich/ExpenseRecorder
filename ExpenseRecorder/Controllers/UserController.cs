@@ -1,6 +1,7 @@
 ﻿using AutoMapper ;
 using ExpenseRecorder.DTO.Requests.User ;
 using ExpenseRecorder.DTO.Responses.User ;
+using ExpenseRecorder.Exceptions ;
 using ExpenseRecorder.Models ;
 using ExpenseRecorder.Services.Interfaces ;
 using Microsoft.AspNetCore.Mvc ;
@@ -85,6 +86,11 @@ public class UserController : ControllerBase
 
 		return result.Match< ActionResult< UserLoginResponse > >(
 			success => Ok( new UserLoginResponse { Token = success , UserName = user.UserName } ) ,
-			failure => BadRequest( failure ) ) ;
+			failure => failure switch
+			{
+				NotFoundException nf   => NotFound( nf ) ,
+				BadRequestException br => BadRequest( br ) ,
+				_                       => StatusCode( 500 , failure )
+			} ) ;
 	}
 }

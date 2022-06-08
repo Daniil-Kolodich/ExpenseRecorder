@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt ;
 using System.Security.Claims ;
 using System.Text ;
+using ExpenseRecorder.Exceptions ;
 using ExpenseRecorder.Models ;
 using ExpenseRecorder.Services.Interfaces ;
 using LanguageExt.Common ;
@@ -34,11 +35,11 @@ public class UserService : IUserService
 	{
 		var user = await _userManager.FindByNameAsync( userForLogin.UserName ) ;
 
-		if ( user == null ) return new Result< string >( new ArgumentNullException( "userForLogin" ) ) ;
+		if ( user == null ) return new Result< string >( new NotFoundException( "User not found" ) ) ;
 
 		var result = await _signInManager.CheckPasswordSignInAsync( user , password , false ) ;
 
-		if ( !result.Succeeded ) return new Result< string >( new ArgumentNullException( "password" ) ) ;
+		if ( !result.Succeeded ) return new Result< string >( new BadRequestException( "Wrong data passed" ) ) ;
 
 		return new Result< string >( GenerateToken( user ) ) ;
 	}

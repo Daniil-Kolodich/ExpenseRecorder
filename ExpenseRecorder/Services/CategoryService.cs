@@ -1,7 +1,9 @@
-﻿using ExpenseRecorder.Models ;
+﻿using ExpenseRecorder.Exceptions ;
+using ExpenseRecorder.Models ;
 using ExpenseRecorder.Repositories.Interfaces ;
 using ExpenseRecorder.Services.Interfaces ;
 using ExpenseRecorder.UnitOfWork.Interfaces ;
+using LanguageExt ;
 using LanguageExt.Common ;
 
 namespace ExpenseRecorder.Services ;
@@ -25,16 +27,18 @@ public class CategoryService : BaseService< Category > , ICategoryService
 	{
 		var user = _authenticationService.CurrentUser ;
 
-		if ( user is null ) return new Result< IEnumerable< Category > >( new ArgumentException() ) ;
+		if ( user is null )
+			return new Result< IEnumerable< Category > >( new NotAuthenticatedException( "Not authenticated" ) ) ;
 
 		return await base.GetAllAsync( c => c.UserId == user.Id ) ;
 	}
 
+// TODO replace func for predicate
 	public override async Task< Result< Category > > GetAsync(int id , Func< Category , bool >? predicate = null)
 	{
 		var user = _authenticationService.CurrentUser ;
 
-		if ( user is null ) return new Result< Category >( new ArgumentException() ) ;
+		if ( user is null ) return new Result< Category >( new NotAuthenticatedException( "Not authenticated" ) ) ;
 
 		return await base.GetAsync( id , c => c.UserId == user.Id ) ;
 	}
@@ -43,7 +47,7 @@ public class CategoryService : BaseService< Category > , ICategoryService
 	{
 		var user = _authenticationService.CurrentUser ;
 
-		if ( user is null ) return new Result< Category >( new ArgumentException() ) ;
+		if ( user is null ) return new Result< Category >( new NotAuthenticatedException( "Not authenticated" ) ) ;
 
 		entity.UserId = user.Id ;
 
@@ -52,14 +56,16 @@ public class CategoryService : BaseService< Category > , ICategoryService
 
 	public override async Task< Result< Category > > UpdateAsync(int id , Category entity)
 	{
-		// TODO :: add check if user is owner of category
 		var user = _authenticationService.CurrentUser ;
 
-		if ( user is null ) return new Result< Category >( new ArgumentException() ) ;
+		if ( user is null ) return new Result< Category >( new NotAuthenticatedException( "Not authenticated" ) ) ;
 
 		var category = await _repository.GetAsync( id , false ) ;
 
-		if ( category is null || category.UserId != user.Id ) return new Result< Category >( new ArgumentException() ) ;
+		if ( category is null ) return new Result< Category >( new NotFoundException( "Category not found" ) ) ;
+
+		if ( category.UserId != user.Id )
+			return new Result< Category >( new NotAuthenticatedException( "Not authenticated" ) ) ;
 
 		return await base.UpdateAsync( id , entity ) ;
 	}
@@ -68,7 +74,7 @@ public class CategoryService : BaseService< Category > , ICategoryService
 	{
 		var user = _authenticationService.CurrentUser ;
 
-		if ( user is null ) return new Result< Category >( new ArgumentException() ) ;
+		if ( user is null ) return new Result< Category >( new NotAuthenticatedException( "Not authenticated" ) ) ;
 
 		return await base.DeleteAsync( id , c => c.UserId == user.Id ) ;
 	}
