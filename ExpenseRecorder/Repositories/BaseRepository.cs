@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore ;
 namespace ExpenseRecorder.Repositories ;
 
 public class BaseRepository < T > : IBaseRepository< T >
-	where T : class , IEntity
+	where T : class , IEntity< T >
 {
 	protected readonly ExpenseRecorderContext _context ;
 	public             DbSet< T >             Data { get ; private set ; }
@@ -17,18 +17,33 @@ public class BaseRepository < T > : IBaseRepository< T >
 		Data     = _context.Set< T >() ;
 	}
 
-	public virtual async Task< IEnumerable< T > > GetAllAsync() => await Data.ToListAsync() ;
-	public virtual async Task< T? > GetAsync(int id) => await Data.SingleOrDefaultAsync( e => e.Id == id ) ;
+	public virtual async Task< IEnumerable< T > > GetAllAsync(bool tracking = false)
+	{
+		if ( tracking ) return await Data.ToListAsync() ;
+
+		return await Data.AsNoTracking().ToListAsync() ;
+	}
+
+	// TODO: single or first ? that is the question, especially for the id
+	public virtual async Task< T? > GetAsync(int id , bool tracking = true)
+	{
+		if ( tracking ) return await Data.SingleOrDefaultAsync( e => e.Id == id ) ;
+
+		return await Data.AsNoTracking().SingleOrDefaultAsync( e => e.Id == id ) ;
+	}
 
 	public virtual async Task< T? > AddAsync(T entity) => ( await Data.AddAsync( entity ) ).Entity ;
 
 	public virtual async Task< T? > UpdateAsync(int id , T entity)
 	{
-		var old = await GetAsync( id ) ;
+		var old = await GetAsync( id , false ) ;
 
 		if ( old == null ) return null ;
 
-		return Data.Update( entity ).Entity ;
+		old.CopyFrom( entity ) ;
+		_context.Entry( old ).State = EntityState.Modified ;
+
+		return old ;
 	}
 
 	public virtual async Task< T? > DeleteAsync(int id)

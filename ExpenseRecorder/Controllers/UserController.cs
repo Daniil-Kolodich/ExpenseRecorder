@@ -2,7 +2,6 @@
 using ExpenseRecorder.DTO.Requests.User ;
 using ExpenseRecorder.DTO.Responses.User ;
 using ExpenseRecorder.Models ;
-using ExpenseRecorder.Repositories ;
 using ExpenseRecorder.Services.Interfaces ;
 using Microsoft.AspNetCore.Mvc ;
 
@@ -13,13 +12,16 @@ namespace ExpenseRecorder.Controllers ;
 public class UserController : ControllerBase
 {
 	private readonly IUserService _userService ;
-	private readonly IMapper _mapper
-		;
-	public UserController(IUserService userService , IMapper mapper)
+	private readonly IMapper      _mapper ;
+
+	public UserController(
+		IMapper      mapper ,
+		IUserService userService)
 	{
+		_mapper      = mapper ;
 		_userService = userService ;
-		_mapper = mapper ;
 	}
+
 /*
 	[ HttpGet ]
 	public async Task< ActionResult< IEnumerable< User > > > GetAll()
@@ -65,27 +67,24 @@ public class UserController : ControllerBase
 	[ Route( "register" ) ]
 	public async Task< ActionResult< UserResponse > > Post([ FromBody ] UserCreateUpdateRequest user)
 	{
-		var request = _mapper.Map< User>( user ) ;
-		var result = await _userService.AddAsync( request ) ;
+		var userToCreate = _mapper.Map< User >( user ) ;
+		var result       = await _userService.CreateAsync( userToCreate , user.Password ) ;
 
-		return result.Match<ActionResult<UserResponse>>(
-			success => Ok( _mapper.Map<UserResponse>(success) ) ,
-			failure => BadRequest( failure ) ) ;
+		if ( !result!.Succeeded ) { return BadRequest( result.Errors ) ; }
+
+		return Ok( _mapper.Map< UserResponse >( userToCreate ) ) ;
 	}
-	
-	
+
+
 	[ HttpPost ]
 	[ Route( "login" ) ]
-	public async Task< ActionResult< UserLoginResponse > > Login([FromBody] UserLoginRequest request)
+	public async Task< ActionResult< UserLoginResponse > > Login([ FromBody ] UserLoginRequest request)
 	{
-		var user = _mapper.	Map<User>( request ) ;
-		var result = await _userService.LoginAsync(user ) ;
+		var user   = _mapper.Map< User >( request ) ;
+		var result = await _userService.LoginAsync( user , request.Password ) ;
 
 		return result.Match< ActionResult< UserLoginResponse > >(
-			success => Ok( new UserLoginResponse {
-				Token = success ,
-				UserName = user.Name
-			} ) ,
+			success => Ok( new UserLoginResponse { Token = success , UserName = user.UserName } ) ,
 			failure => BadRequest( failure ) ) ;
 	}
 }

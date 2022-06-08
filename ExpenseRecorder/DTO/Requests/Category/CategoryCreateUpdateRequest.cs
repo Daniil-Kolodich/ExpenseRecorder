@@ -2,5 +2,5 @@
 
 public class CategoryCreateUpdateRequest
 {
-	public string Name   { get ; set ; }
+	public string Name { get ; set ; } = string.Empty ;
 }

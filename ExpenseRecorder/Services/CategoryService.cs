@@ -52,11 +52,14 @@ public class CategoryService : BaseService< Category > , ICategoryService
 
 	public override async Task< Result< Category > > UpdateAsync(int id , Category entity)
 	{
+		// TODO :: add check if user is owner of category
 		var user = _authenticationService.CurrentUser ;
 
 		if ( user is null ) return new Result< Category >( new ArgumentException() ) ;
 
-		entity.UserId = user.Id ;
+		var category = await _repository.GetAsync( id , false ) ;
+
+		if ( category is null || category.UserId != user.Id ) return new Result< Category >( new ArgumentException() ) ;
 
 		return await base.UpdateAsync( id , entity ) ;
 	}

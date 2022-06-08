@@ -49,17 +49,16 @@ public class CategoryController : ControllerBase
 
 	[ HttpPut ]
 	[ Route( "{id}" ) ]
-	// TODO: FIX IT : Not working (
-	// TODO : Make separate dto for put without userId
 	[ Authorize ]
 	public async Task< ActionResult< CategoryResponse > > Put(int id , [ FromBody ] CategoryCreateUpdateRequest request)
 	{
 		var category = _mapper.Map< Category >( request ) ;
-		var result   = await _categoryService.UpdateAsync( id , category ) ;
+		category.Id = id ;
+		var result = await _categoryService.UpdateAsync( id , category ) ;
 
 		return result.Match< ActionResult< CategoryResponse > >(
 			success => Ok( _mapper.Map< CategoryResponse >( success ) ) ,
-			failure => BadRequest( failure ) ) ;
+			failure => BadRequest( failure.ToString() ) ) ;
 	}
 
 	[ HttpDelete ]

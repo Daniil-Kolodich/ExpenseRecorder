@@ -1,6 +1,7 @@
 ﻿namespace ExpenseRecorder.Models.Interfaces ;
 
-public interface IEntity
+public interface IEntity < T > where T : class
 {
-	int Id { get; set; }
+	int  Id { get ; set ; }
+	void CopyFrom(T entity) ;
 }

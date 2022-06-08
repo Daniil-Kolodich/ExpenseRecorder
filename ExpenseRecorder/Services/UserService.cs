@@ -6,31 +6,41 @@ using ExpenseRecorder.Repositories.Interfaces ;
 using ExpenseRecorder.Services.Interfaces ;
 using ExpenseRecorder.UnitOfWork.Interfaces ;
 using LanguageExt.Common ;
+using Microsoft.AspNetCore.Identity ;
 using Microsoft.IdentityModel.Tokens ;
 
 namespace ExpenseRecorder.Services ;
 
-public class UserService : BaseService< User > , IUserService
+public class UserService : IUserService
 {
 	public static readonly string SecretKey = "db3OIsj+BXE9NZDy0t8W3TcNekrF+2d/1sFnWG4HnV8TZY30iTOdtVWJOMZ4zY" ;
 	public static readonly string Issuer    = "https://localhost:7043" ;
 	public static readonly string Audience  = "https://localhost:7043" ;
 
-	public UserService(IUserRepository repository , IUnitOfWork unitOfWork)
-		: base( repository , unitOfWork )
-	{ }
+	private readonly UserManager< User >   _userManager ;
+	private readonly SignInManager< User > _signInManager ;
 
-	public async Task< Result< string > > LoginAsync(User userForLogin)
+	public UserService(UserManager< User > userManager , SignInManager< User > signInManager)
 	{
-		var users = await _repository.GetAllAsync() ;
-		var user  = users.SingleOrDefault( u => u.Name == userForLogin.Name && u.Password == userForLogin.Password ) ;
+		_userManager   = userManager ;
+		_signInManager = signInManager ;
+	}
 
-		if ( user is null )
-			return new Result< string >( new ArgumentException() ) ;
+	public async Task< IdentityResult? > CreateAsync(User user , string password) =>
+		await _userManager.CreateAsync( user , password ) ;
 
-		var token = GenerateToken( user ) ;
 
-		return new Result< string >( token ) ;
+	public async Task< Result< string > > LoginAsync(User userForLogin , string password)
+	{
+		var user = await _userManager.FindByNameAsync( userForLogin.UserName ) ;
+
+		if ( user == null ) return new Result< string >( new ArgumentNullException( "userForLogin" ) ) ;
+
+		var result = await _signInManager.CheckPasswordSignInAsync( user , password , false ) ;
+
+		if ( !result.Succeeded ) return new Result< string >( new ArgumentNullException( "password" ) ) ;
+
+		return new Result< string >( GenerateToken( user ) ) ;
 	}
 
 	// TODO : refactor this method
@@ -38,7 +48,7 @@ public class UserService : BaseService< User > , IUserService
 	{
 		var claims = new[ ]
 		{
-			new Claim( ClaimTypes.NameIdentifier , user.Id.ToString() ) , new Claim( ClaimTypes.Name , user.Name ) ,
+			new Claim( ClaimTypes.NameIdentifier , user.Id ) , new Claim( ClaimTypes.Name , user.UserName ) ,
 			new Claim( ClaimTypes.Email ,          user.Email ) ,
 		} ;
 

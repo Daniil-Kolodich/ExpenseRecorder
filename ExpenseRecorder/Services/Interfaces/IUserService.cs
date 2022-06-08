@@ -1,9 +1,12 @@
-﻿using ExpenseRecorder.Models ;
+﻿
+using ExpenseRecorder.Models ;
 using LanguageExt.Common ;
+using Microsoft.AspNetCore.Identity ;
 
 namespace ExpenseRecorder.Services.Interfaces ;
-
-public interface IUserService : IBaseService< User >
+// TODO : will it be like base service ?
+public interface IUserService
 {
-	Task< Result< string > > LoginAsync( User userForLogin ) ;
+	Task<IdentityResult?> CreateAsync(User user, string password) ;  
+	Task< Result<string> > LoginAsync( User userForLogin , string password) ;
 }
