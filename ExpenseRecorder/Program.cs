@@ -52,7 +52,7 @@ builder.Services.AddSwaggerGen( options =>
 
 builder.Services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme ).AddJwtBearer( options =>
 {
-	options.TokenValidationParameters = new TokenValidationParameters()
+	options.TokenValidationParameters = new TokenValidationParameters
 	{
 		ValidateActor            = false ,
 		ValidateAudience         = false ,

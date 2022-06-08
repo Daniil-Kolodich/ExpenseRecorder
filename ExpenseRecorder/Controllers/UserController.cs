@@ -11,8 +11,8 @@ namespace ExpenseRecorder.Controllers ;
 [ Route( "[controller]" ) ]
 public class UserController : ControllerBase
 {
-	private readonly IUserService _userService ;
 	private readonly IMapper      _mapper ;
+	private readonly IUserService _userService ;
 
 	public UserController(
 		IMapper      mapper ,
@@ -70,7 +70,7 @@ public class UserController : ControllerBase
 		var userToCreate = _mapper.Map< User >( user ) ;
 		var result       = await _userService.CreateAsync( userToCreate , user.Password ) ;
 
-		if ( !result!.Succeeded ) { return BadRequest( result.Errors ) ; }
+		if ( !result!.Succeeded ) return BadRequest( result.Errors ) ;
 
 		return Ok( _mapper.Map< UserResponse >( userToCreate ) ) ;
 	}

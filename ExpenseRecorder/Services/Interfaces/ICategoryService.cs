@@ -2,5 +2,5 @@
 
 namespace ExpenseRecorder.Services.Interfaces ;
 
-public interface ICategoryService : IBaseService<Category>
+public interface ICategoryService : IBaseService< Category >
 { }

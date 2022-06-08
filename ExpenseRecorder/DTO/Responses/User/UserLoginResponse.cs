@@ -2,6 +2,6 @@
 
 public class UserLoginResponse
 {
-	public string Token { get ; set ; } = String.Empty ;
-	public string UserName { get ; set ; } = String.Empty ;
+	public string Token    { get ; set ; } = string.Empty ;
+	public string UserName { get ; set ; } = string.Empty ;
 }

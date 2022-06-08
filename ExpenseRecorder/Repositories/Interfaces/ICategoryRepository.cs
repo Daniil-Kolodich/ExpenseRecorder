@@ -2,5 +2,5 @@
 
 namespace ExpenseRecorder.Repositories.Interfaces ;
 
-public interface ICategoryRepository : IBaseRepository<Category>
+public interface ICategoryRepository : IBaseRepository< Category >
 { }

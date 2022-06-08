@@ -2,9 +2,7 @@
 using System.Security.Claims ;
 using System.Text ;
 using ExpenseRecorder.Models ;
-using ExpenseRecorder.Repositories.Interfaces ;
 using ExpenseRecorder.Services.Interfaces ;
-using ExpenseRecorder.UnitOfWork.Interfaces ;
 using LanguageExt.Common ;
 using Microsoft.AspNetCore.Identity ;
 using Microsoft.IdentityModel.Tokens ;
@@ -14,11 +12,11 @@ namespace ExpenseRecorder.Services ;
 public class UserService : IUserService
 {
 	public static readonly string SecretKey = "db3OIsj+BXE9NZDy0t8W3TcNekrF+2d/1sFnWG4HnV8TZY30iTOdtVWJOMZ4zY" ;
-	public static readonly string Issuer    = "https://localhost:7043" ;
-	public static readonly string Audience  = "https://localhost:7043" ;
+	public static readonly string Issuer = "https://localhost:7043" ;
+	public static readonly string Audience = "https://localhost:7043" ;
+	private readonly       SignInManager< User > _signInManager ;
 
-	private readonly UserManager< User >   _userManager ;
-	private readonly SignInManager< User > _signInManager ;
+	private readonly UserManager< User > _userManager ;
 
 	public UserService(UserManager< User > userManager , SignInManager< User > signInManager)
 	{
@@ -26,8 +24,10 @@ public class UserService : IUserService
 		_signInManager = signInManager ;
 	}
 
-	public async Task< IdentityResult? > CreateAsync(User user , string password) =>
-		await _userManager.CreateAsync( user , password ) ;
+	public async Task< IdentityResult? > CreateAsync(User user , string password)
+	{
+		return await _userManager.CreateAsync( user , password ) ;
+	}
 
 
 	public async Task< Result< string > > LoginAsync(User userForLogin , string password)
@@ -49,14 +49,14 @@ public class UserService : IUserService
 		var claims = new[ ]
 		{
 			new Claim( ClaimTypes.NameIdentifier , user.Id ) , new Claim( ClaimTypes.Name , user.UserName ) ,
-			new Claim( ClaimTypes.Email ,          user.Email ) ,
+			new Claim( ClaimTypes.Email ,          user.Email )
 		} ;
 
 		var token = new JwtSecurityToken
 		(
-			issuer : "https://localhost:7043" ,
-			audience : "https://localhost:7043" ,
-			claims : claims ,
+			"https://localhost:7043" ,
+			"https://localhost:7043" ,
+			claims ,
 			expires : DateTime.UtcNow.AddMinutes( 30 ) ,
 			notBefore : DateTime.UtcNow ,
 			signingCredentials : new SigningCredentials(

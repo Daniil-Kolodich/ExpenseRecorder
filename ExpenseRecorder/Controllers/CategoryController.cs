@@ -1,9 +1,6 @@
-﻿using System.Security.Claims ;
-using AutoMapper ;
+﻿using AutoMapper ;
 using ExpenseRecorder.DTO.Requests.Category ;
-using ExpenseRecorder.DTO.Requests.User ;
 using ExpenseRecorder.DTO.Responses.Category ;
-using ExpenseRecorder.DTO.Responses.User ;
 using ExpenseRecorder.Models ;
 using ExpenseRecorder.Services.Interfaces ;
 using Microsoft.AspNetCore.Authorization ;

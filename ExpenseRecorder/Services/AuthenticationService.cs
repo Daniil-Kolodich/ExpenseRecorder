@@ -1,10 +1,7 @@
-﻿using System.IdentityModel.Tokens.Jwt ;
-using System.Security.Claims ;
-using System.Text ;
+﻿using System.Security.Claims ;
 using ExpenseRecorder.Models ;
 using ExpenseRecorder.Services.Interfaces ;
 using Microsoft.AspNetCore.Identity ;
-using Microsoft.IdentityModel.Tokens ;
 
 namespace ExpenseRecorder.Services ;
 
