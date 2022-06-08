@@ -9,13 +9,14 @@ public class BaseRepository < T > : IBaseRepository< T >
 	where T : class , IEntity< T >
 {
 	protected readonly ExpenseRecorderContext _context ;
-	public             DbSet< T >             Data { get ; private set ; }
 
 	public BaseRepository(ExpenseRecorderContext context)
 	{
 		_context = context ;
 		Data     = _context.Set< T >() ;
 	}
+
+	public DbSet< T > Data { get ; }
 
 	public virtual async Task< IEnumerable< T > > GetAllAsync(bool tracking = false)
 	{
@@ -32,7 +33,10 @@ public class BaseRepository < T > : IBaseRepository< T >
 		return await Data.AsNoTracking().SingleOrDefaultAsync( e => e.Id == id ) ;
 	}
 
-	public virtual async Task< T? > AddAsync(T entity) => ( await Data.AddAsync( entity ) ).Entity ;
+	public virtual async Task< T? > AddAsync(T entity)
+	{
+		return ( await Data.AddAsync( entity ) ).Entity ;
+	}
 
 	public virtual async Task< T? > UpdateAsync(int id , T entity)
 	{
