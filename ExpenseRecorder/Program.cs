@@ -63,7 +63,7 @@ builder.Services.AddAutoMapper( typeof(UserProfile) , typeof(CategoryProfile) ) 
 builder.Services.AddAuthorization() ;
 
 builder.Services.AddDbContext< ExpenseRecorderContext >( context => context
-   .UseSqlServer( "Server=(localdb)\\mssqllocaldb;Database=expense_recorder_v1;Trusted_Connection=True;" ) ) ;
+   .UseSqlServer( builder.Configuration.GetConnectionString( "DefaultConnection" ) ) ) ;
 
 var identity        = builder.Services.AddIdentityCore< User >() ;
 var identityBuilder = new IdentityBuilder( identity.UserType , identity.Services ) ;
