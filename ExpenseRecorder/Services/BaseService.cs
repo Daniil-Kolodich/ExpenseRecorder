@@ -1,9 +1,11 @@
-﻿using ExpenseRecorder.Exceptions ;
+﻿using System.Linq.Expressions ;
+using ExpenseRecorder.Exceptions ;
 using ExpenseRecorder.Models.Interfaces ;
 using ExpenseRecorder.Repositories.Interfaces ;
 using ExpenseRecorder.Services.Interfaces ;
 using ExpenseRecorder.UnitOfWork.Interfaces ;
 using LanguageExt.Common ;
+using Microsoft.EntityFrameworkCore ;
 
 namespace ExpenseRecorder.Services ;
 
@@ -12,6 +14,7 @@ public class BaseService < T > : IBaseService< T >
 {
 	protected readonly IBaseRepository< T > _repository ;
 	protected readonly IUnitOfWork          _unitOfWork ;
+	protected IList<Expression<Func<T, bool>>> _filters = new List<Expression<Func<T, bool>>>();
 
 	public BaseService(IBaseRepository< T > repository , IUnitOfWork unitOfWork)
 	{
@@ -19,10 +22,17 @@ public class BaseService < T > : IBaseService< T >
 		_unitOfWork = unitOfWork ;
 	}
 
-	public virtual async Task< Result< IEnumerable< T > > > GetAllAsync(Func< T , bool >? predicate = null)
+	public virtual async Task< Result< IEnumerable< T > > > GetAllAsync()
 	{
-		var result                          = await _repository.GetAllAsync() ;
-		if ( predicate is not null ) result = result.Where( predicate ) ;
+		var query = _repository.GetAllAsQueryable() ;
+
+		// TODO: maybe use aggregate ? or use linq ?
+		foreach ( var filter in _filters )
+		{
+			Console.WriteLine(  $"Applying filter {filter}") ;
+			query = query.Where( filter ) ;
+		}
+		var result = await query.ToListAsync() ;
 
 		return new Result< IEnumerable< T > >( result ) ;
 	}

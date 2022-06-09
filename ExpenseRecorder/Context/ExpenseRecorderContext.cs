@@ -11,7 +11,7 @@ public sealed class ExpenseRecorderContext : IdentityDbContext< User >
 	public ExpenseRecorderContext(DbContextOptions< ExpenseRecorderContext > options)
 		: base( options )
 	{
-		Database.EnsureDeleted() ;
+//		Database.EnsureDeleted() ;
 		Database.EnsureCreated() ;
 	}
 
@@ -20,6 +20,10 @@ public sealed class ExpenseRecorderContext : IdentityDbContext< User >
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
+		if ( !optionsBuilder.IsConfigured)
+		{
+			optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=expense_recorder_v1;Trusted_Connection=True;") ;
+		}
 		optionsBuilder.EnableSensitiveDataLogging() ;
 	}
 

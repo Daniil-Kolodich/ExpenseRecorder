@@ -18,11 +18,9 @@ public class BaseRepository < T > : IBaseRepository< T >
 
 	public DbSet< T > Data { get ; }
 
-	public virtual async Task< IEnumerable< T > > GetAllAsync(bool tracking = false)
+	public virtual IQueryable<T> GetAllAsQueryable(bool tracking = false)
 	{
-		if ( tracking ) return await Data.ToListAsync() ;
-
-		return await Data.AsNoTracking().ToListAsync() ;
+		return tracking ? Data.AsQueryable() : Data.AsNoTracking() ;
 	}
 
 	// TODO: single or first ? that is the question, especially for the id

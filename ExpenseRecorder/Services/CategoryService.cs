@@ -1,4 +1,5 @@
-﻿using ExpenseRecorder.Exceptions ;
+﻿using System.Linq.Expressions ;
+using ExpenseRecorder.Exceptions ;
 using ExpenseRecorder.Models ;
 using ExpenseRecorder.Repositories.Interfaces ;
 using ExpenseRecorder.Services.Interfaces ;
@@ -21,16 +22,15 @@ public class CategoryService : BaseService< Category > , ICategoryService
 		_authenticationService = authenticationService ;
 	}
 
-
-	public override async Task< Result< IEnumerable< Category > > > GetAllAsync(
-		Func< Category , bool >? predicate = null)
+	public override async Task< Result< IEnumerable< Category > > > GetAllAsync()
 	{
 		var user = _authenticationService.CurrentUser ;
 
 		if ( user is null )
 			return new Result< IEnumerable< Category > >( new NotAuthenticatedException( "Not authenticated" ) ) ;
-
-		return await base.GetAllAsync( c => c.UserId == user.Id ) ;
+		
+		_filters.Add( x => x.UserId == user.Id ) ;
+		return await base.GetAllAsync() ;
 	}
 
 // TODO replace func for predicate
