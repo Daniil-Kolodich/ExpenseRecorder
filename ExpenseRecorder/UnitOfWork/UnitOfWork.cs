@@ -11,6 +11,7 @@ public class UnitOfWork : IUnitOfWork
 
 	public async Task< bool > SaveAsync()
 	{
-		return await _context.SaveChangesAsync() > 0 ;
+		try { return await _context.SaveChangesAsync() > 0 ; }
+		catch ( Exception ) { return false ; }
 	}
 }

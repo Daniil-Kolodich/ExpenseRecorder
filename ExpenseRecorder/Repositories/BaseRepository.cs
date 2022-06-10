@@ -16,7 +16,7 @@ public class BaseRepository < T > : IBaseRepository< T >
 		Data     = _context.Set< T >() ;
 	}
 
-	private DbSet< T > Data { get ; }
+	public DbSet< T > Data { get ; }
 
 	public virtual IQueryable< T > GetAllAsQueryable(bool tracking = false) =>
 		tracking ? Data.AsQueryable() : Data.AsNoTracking() ;

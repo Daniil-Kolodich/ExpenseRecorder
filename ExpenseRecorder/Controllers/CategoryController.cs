@@ -11,6 +11,7 @@ namespace ExpenseRecorder.Controllers ;
 
 [ ApiController ]
 [ Route( "[controller]" ) ]
+[Authorize ]
 public class CategoryController : ControllerBase
 {
 	private readonly ICategoryService _categoryService ;
@@ -35,7 +36,6 @@ public class CategoryController : ControllerBase
 
 	[ HttpGet ]
 	[ Route( "GetAll" ) ]
-	[ Authorize ]
 	public async Task< ActionResult< IEnumerable< CategoryResponse > > > GetAll()
 	{
 		var response = await _categoryService.GetAllAsync() ;
@@ -47,7 +47,6 @@ public class CategoryController : ControllerBase
 
 	[ HttpGet ]
 	[ Route( "{id}" ) ]
-	[ Authorize ]
 	public async Task< ActionResult< CategoryResponse > > Get(int id)
 	{
 		var result = await _categoryService.GetAsync( id ) ;
@@ -59,7 +58,6 @@ public class CategoryController : ControllerBase
 
 	[ HttpPut ]
 	[ Route( "{id}" ) ]
-	[ Authorize ]
 	public async Task< ActionResult< CategoryResponse > > Put(int id , [ FromBody ] CategoryCreateUpdateRequest request)
 	{
 		var category = _mapper.Map< Category >( request ) ;
@@ -72,7 +70,6 @@ public class CategoryController : ControllerBase
 
 	[ HttpDelete ]
 	[ Route( "{id}" ) ]
-	[ Authorize ]
 	public async Task< ActionResult< CategoryResponse > > Delete(int id)
 	{
 		var result = await _categoryService.DeleteAsync( id ) ;
@@ -83,7 +80,6 @@ public class CategoryController : ControllerBase
 	}
 
 	[ HttpPost ]
-	[ Authorize ]
 	public async Task< ActionResult< CategoryResponse > > Post([ FromBody ] CategoryCreateUpdateRequest request)
 	{
 		var category = _mapper.Map< Category >( request ) ;
