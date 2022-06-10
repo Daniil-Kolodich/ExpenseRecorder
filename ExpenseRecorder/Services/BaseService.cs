@@ -12,9 +12,9 @@ namespace ExpenseRecorder.Services ;
 public class BaseService < T > : IBaseService< T >
 	where T : class , IEntity< T >
 {
-	protected readonly IBaseRepository< T > _repository ;
-	protected readonly IUnitOfWork          _unitOfWork ;
-	protected IList<Expression<Func<T, bool>>> _filters = new List<Expression<Func<T, bool>>>();
+	private protected readonly IBaseRepository< T > _repository ;
+	private readonly IUnitOfWork _unitOfWork ;
+	private protected IList< Expression< Func< T , bool > > > _filters = new List< Expression< Func< T , bool > > >() ;
 
 	public BaseService(IBaseRepository< T > repository , IUnitOfWork unitOfWork)
 	{
@@ -26,12 +26,9 @@ public class BaseService < T > : IBaseService< T >
 	{
 		var query = _repository.GetAllAsQueryable() ;
 
-		// TODO: maybe use aggregate ? or use linq ?
-		foreach ( var filter in _filters )
-		{
-			Console.WriteLine(  $"Applying filter {filter}") ;
-			query = query.Where( filter ) ;
-		}
+		if ( _filters.Any() )
+			query = _filters.Aggregate( query , (current , filter) => current.Where( filter ) ) ;
+
 		var result = await query.ToListAsync() ;
 
 		return new Result< IEnumerable< T > >( result ) ;
@@ -60,11 +57,12 @@ public class BaseService < T > : IBaseService< T >
 		try
 		{
 			var addedEntity = await _repository.AddAsync( entity ) ;
-			var result      = await _unitOfWork.SaveAsync() ;
-			
-			
+
+
 			if ( addedEntity is null )
-				return new Result< T >( new BadRequestException( $"Unable to save {typeof(T)} to perform AddAsync" ) ) ;
+				return new Result< T >( new BadRequestException( $"Unable to add {typeof(T)} to perform AddAsync" ) ) ;
+
+			var result = await _unitOfWork.SaveAsync() ;
 
 			if ( !result )
 				return new Result< T >(
@@ -75,23 +73,26 @@ public class BaseService < T > : IBaseService< T >
 		catch ( Exception ex ) { return new Result< T >( ex ) ; }
 	}
 
-	public virtual async Task< Result< T > > UpdateAsync(int id , T entity)
+	public virtual async Task< Result< T > > UpdateAsync(int id , T entity , Func< T , bool >? predicate = null)
 	{
 		try
 		{
-			entity.Id = id ;
-			var updatedEntity = await _repository.UpdateAsync( id , entity ) ;
-			var result        = await _unitOfWork.SaveAsync() ;
+			var oldEntity = await _repository.UpdateAsync( id , entity ) ;
 
-			if ( updatedEntity is null )
+			if ( oldEntity is null )
 				return new Result< T >(
 					new BadRequestException( $"Unable to find {typeof(T)} with {id} to perform UpdateAsync" ) ) ;
+
+			if ( predicate is not null && !predicate( oldEntity ) )
+				return new Result< T >( new PredicateMismatchException( "Result doesn't fit predicate" ) ) ;
+
+			var result = await _unitOfWork.SaveAsync() ;
 
 			if ( !result )
 				return new Result< T >(
 					new SaveContextException( $"Unable to save {typeof(T)} to perform UpdateAsync" ) ) ;
 
-			return new Result< T >( updatedEntity ) ;
+			return new Result< T >( oldEntity ) ;
 		}
 		catch ( Exception ex ) { return new Result< T >( ex ) ; }
 	}

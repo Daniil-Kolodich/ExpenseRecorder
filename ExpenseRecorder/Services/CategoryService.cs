@@ -54,20 +54,13 @@ public class CategoryService : BaseService< Category > , ICategoryService
 		return await base.AddAsync( entity ) ;
 	}
 
-	public override async Task< Result< Category > > UpdateAsync(int id , Category entity)
+	public override async Task< Result< Category > > UpdateAsync(int id , Category entity, Func< Category , bool >? predicate = null)
 	{
 		var user = _authenticationService.CurrentUser ;
 
 		if ( user is null ) return new Result< Category >( new NotAuthenticatedException( "Not authenticated" ) ) ;
 
-		var category = await _repository.GetAsync( id , false ) ;
-
-		if ( category is null ) return new Result< Category >( new NotFoundException( "Category not found" ) ) ;
-
-		if ( category.UserId != user.Id )
-			return new Result< Category >( new NotAuthenticatedException( "Not authenticated" ) ) ;
-
-		return await base.UpdateAsync( id , entity ) ;
+		return await base.UpdateAsync( id , entity , c => c.UserId == user.Id ) ;
 	}
 
 	public override async Task< Result< Category > > DeleteAsync(int id , Func< Category , bool >? predicate = null)

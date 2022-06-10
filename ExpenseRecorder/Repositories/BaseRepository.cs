@@ -8,36 +8,27 @@ namespace ExpenseRecorder.Repositories ;
 public class BaseRepository < T > : IBaseRepository< T >
 	where T : class , IEntity< T >
 {
-	protected readonly ExpenseRecorderContext _context ;
+	private readonly ExpenseRecorderContext _context ;
 
-	public BaseRepository(ExpenseRecorderContext context)
+	protected BaseRepository(ExpenseRecorderContext context)
 	{
 		_context = context ;
 		Data     = _context.Set< T >() ;
 	}
 
-	public DbSet< T > Data { get ; }
+	private DbSet< T > Data { get ; }
 
-	public virtual IQueryable<T> GetAllAsQueryable(bool tracking = false)
-	{
-		return tracking ? Data.AsQueryable() : Data.AsNoTracking() ;
-	}
+	public virtual IQueryable< T > GetAllAsQueryable(bool tracking = false) =>
+		tracking ? Data.AsQueryable() : Data.AsNoTracking() ;
 
-	// TODO: single or first ? that is the question, especially for the id
-	public virtual async Task< T? > GetAsync(int id , bool tracking = true)
-	{
-		if ( tracking ) return await Data.SingleOrDefaultAsync( e => e.Id == id ) ;
+	public virtual async Task< T? > GetAsync(int id , bool tracking = true) =>
+		await ( tracking ? Data : Data.AsNoTracking() ).FirstOrDefaultAsync( x => x.Id == id ) ;
 
-		return await Data.AsNoTracking().SingleOrDefaultAsync( e => e.Id == id ) ;
-	}
-
-	public virtual async Task< T? > AddAsync(T entity)
-	{
-		return ( await Data.AddAsync( entity ) ).Entity ;
-	}
+	public virtual async Task< T? > AddAsync(T entity) => ( await Data.AddAsync( entity ) ).Entity ;
 
 	public virtual async Task< T? > UpdateAsync(int id , T entity)
 	{
+		// TODO : what if i get as tracking ?
 		var old = await GetAsync( id , false ) ;
 
 		if ( old == null ) return null ;

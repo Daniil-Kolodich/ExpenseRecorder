@@ -63,7 +63,6 @@ public class CategoryController : ControllerBase
 	public async Task< ActionResult< CategoryResponse > > Put(int id , [ FromBody ] CategoryCreateUpdateRequest request)
 	{
 		var category = _mapper.Map< Category >( request ) ;
-		category.Id = id ;
 		var result = await _categoryService.UpdateAsync( id , category ) ;
 
 		return result.Match< ActionResult< CategoryResponse > >(
