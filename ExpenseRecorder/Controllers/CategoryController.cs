@@ -11,7 +11,7 @@ namespace ExpenseRecorder.Controllers ;
 
 [ ApiController ]
 [ Route( "[controller]" ) ]
-[Authorize ]
+[ Authorize ]
 public class CategoryController : ControllerBase
 {
 	private readonly ICategoryService _categoryService ;
@@ -23,8 +23,9 @@ public class CategoryController : ControllerBase
 		_categoryService = categoryService ;
 	}
 
-	private ActionResult MapExceptionsToActionResults(Exception ex) =>
-		ex switch
+	private ActionResult MapExceptionsToActionResults(Exception ex)
+	{
+		return ex switch
 		{
 			NotFoundException nf          => NotFound( nf.Message ) ,
 			NotAuthenticatedException na  => Unauthorized( na.Message ) ,
@@ -33,6 +34,7 @@ public class CategoryController : ControllerBase
 			SaveContextException sc       => StatusCode( 500 , sc.Message ) ,
 			_                             => StatusCode( 500 , ex.Message )
 		} ;
+	}
 
 	[ HttpGet ]
 	[ Route( "GetAll" ) ]
@@ -61,7 +63,7 @@ public class CategoryController : ControllerBase
 	public async Task< ActionResult< CategoryResponse > > Put(int id , [ FromBody ] CategoryCreateUpdateRequest request)
 	{
 		var category = _mapper.Map< Category >( request ) ;
-		var result = await _categoryService.UpdateAsync( id , category ) ;
+		var result   = await _categoryService.UpdateAsync( id , category ) ;
 
 		return result.Match< ActionResult< CategoryResponse > >(
 			success => Ok( _mapper.Map< CategoryResponse >( success ) ) ,

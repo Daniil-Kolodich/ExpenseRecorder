@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices ;
-using ExpenseRecorder.Models ;
+﻿using ExpenseRecorder.Models ;
 using ExpenseRecorder.Models.Configurations ;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore ;
 using Microsoft.EntityFrameworkCore ;
@@ -15,15 +14,15 @@ public sealed class ExpenseRecorderContext : IdentityDbContext< User >
 		Database.EnsureCreated() ;
 	}
 
-	public DbSet< Category > Categories { get ; set ; } = default! ;
-	public DbSet<Transaction> Transactions { get; set; } = default!;
+	public DbSet< Category >    Categories   { get ; set ; } = default! ;
+	public DbSet< Transaction > Transactions { get ; set ; } = default! ;
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
-		if ( !optionsBuilder.IsConfigured)
-		{
-			optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=expense_recorder_v1;Trusted_Connection=True;") ;
-		}
+		if ( !optionsBuilder.IsConfigured )
+			optionsBuilder.UseSqlServer(
+				"Server=(localdb)\\mssqllocaldb;Database=expense_recorder_v1;Trusted_Connection=True;" ) ;
+
 		optionsBuilder.EnableSensitiveDataLogging() ;
 	}
 

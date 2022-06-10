@@ -18,13 +18,20 @@ public class BaseRepository < T > : IBaseRepository< T >
 
 	public DbSet< T > Data { get ; }
 
-	public virtual IQueryable< T > GetAllAsQueryable(bool tracking = false) =>
-		tracking ? Data.AsQueryable() : Data.AsNoTracking() ;
+	public virtual IQueryable< T > GetAllAsQueryable(bool tracking = false)
+	{
+		return tracking ? Data.AsQueryable() : Data.AsNoTracking() ;
+	}
 
-	public virtual async Task< T? > GetAsync(int id , bool tracking = true) =>
-		await ( tracking ? Data : Data.AsNoTracking() ).FirstOrDefaultAsync( x => x.Id == id ) ;
+	public virtual async Task< T? > GetAsync(int id , bool tracking = true)
+	{
+		return await ( tracking ? Data : Data.AsNoTracking() ).FirstOrDefaultAsync( x => x.Id == id ) ;
+	}
 
-	public virtual async Task< T? > AddAsync(T entity) => ( await Data.AddAsync( entity ) ).Entity ;
+	public virtual async Task< T? > AddAsync(T entity)
+	{
+		return ( await Data.AddAsync( entity ) ).Entity ;
+	}
 
 	public virtual async Task< T? > UpdateAsync(int id , T entity)
 	{

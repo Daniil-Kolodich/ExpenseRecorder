@@ -1,10 +1,8 @@
-﻿using System.Linq.Expressions ;
-using ExpenseRecorder.Exceptions ;
+﻿using ExpenseRecorder.Exceptions ;
 using ExpenseRecorder.Models ;
 using ExpenseRecorder.Repositories.Interfaces ;
 using ExpenseRecorder.Services.Interfaces ;
 using ExpenseRecorder.UnitOfWork.Interfaces ;
-using LanguageExt ;
 using LanguageExt.Common ;
 
 namespace ExpenseRecorder.Services ;
@@ -28,8 +26,9 @@ public class CategoryService : BaseService< Category > , ICategoryService
 
 		if ( user is null )
 			return new Result< IEnumerable< Category > >( new NotAuthenticatedException( "Not authenticated" ) ) ;
-		
+
 		_filters.Add( x => x.UserId == user.Id ) ;
+
 		return await base.GetAllAsync() ;
 	}
 
@@ -54,7 +53,10 @@ public class CategoryService : BaseService< Category > , ICategoryService
 		return await base.AddAsync( entity ) ;
 	}
 
-	public override async Task< Result< Category > > UpdateAsync(int id , Category entity, Func< Category , bool >? predicate = null)
+	public override async Task< Result< Category > > UpdateAsync(
+		int                      id ,
+		Category                 entity ,
+		Func< Category , bool >? predicate = null)
 	{
 		var user = _authenticationService.CurrentUser ;
 

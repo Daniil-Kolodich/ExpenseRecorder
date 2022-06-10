@@ -90,7 +90,7 @@ public class UserController : ControllerBase
 			{
 				NotFoundException nf   => NotFound( nf ) ,
 				BadRequestException br => BadRequest( br ) ,
-				_                       => StatusCode( 500 , failure )
+				_                      => StatusCode( 500 , failure )
 			} ) ;
 	}
 }

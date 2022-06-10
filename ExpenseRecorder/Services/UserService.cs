@@ -55,8 +55,8 @@ public class UserService : IUserService
 
 		var token = new JwtSecurityToken
 		(
-			issuer : Issuer ,
-			audience : Audience ,
+			Issuer ,
+			Audience ,
 			claims ,
 			expires : DateTime.UtcNow.AddMinutes( 30 ) ,
 			notBefore : DateTime.UtcNow ,

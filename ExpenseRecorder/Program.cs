@@ -58,7 +58,7 @@ builder.Services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme ).Add
 	} ;
 } ) ;
 
-builder.Services.AddAutoMapper( typeof(UserProfile) , typeof(CategoryProfile) , typeof(TransactionProfile)) ;
+builder.Services.AddAutoMapper( typeof(UserProfile) , typeof(CategoryProfile) , typeof(TransactionProfile) ) ;
 
 builder.Services.AddAuthorization() ;
 

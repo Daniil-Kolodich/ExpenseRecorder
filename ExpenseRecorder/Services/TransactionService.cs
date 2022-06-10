@@ -53,8 +53,10 @@ public class TransactionService : BaseService< Transaction > , ITransactionServi
 		entity.UserId = user.Id ;
 
 		var category = await _categoryRepository.GetAsync( entity.CategoryId ) ;
-		if (category is null || category.UserId != user.Id)
+
+		if ( category is null || category.UserId != user.Id )
 			return new Result< Transaction >( new NotFoundException( "Not found such category" ) ) ;
+
 		return await base.AddAsync( entity ) ;
 	}
 
@@ -68,10 +70,11 @@ public class TransactionService : BaseService< Transaction > , ITransactionServi
 		if ( user is null ) return new Result< Transaction >( new NotAuthenticatedException( "Not authenticated" ) ) ;
 
 		var category = await _categoryRepository.GetAsync( entity.CategoryId ) ;
-		if (category is null || category.UserId != user.Id)
+
+		if ( category is null || category.UserId != user.Id )
 			return new Result< Transaction >( new NotFoundException( "Not found such category !!" ) ) ;
 
-		return await base.UpdateAsync( id , entity , c => c.UserId == user.Id) ;
+		return await base.UpdateAsync( id , entity , c => c.UserId == user.Id ) ;
 	}
 
 	public override async Task< Result< Transaction > > DeleteAsync(

@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders ;
 
 namespace ExpenseRecorder.Models.Configurations ;
 
-public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
+public class TransactionConfiguration : IEntityTypeConfiguration< Transaction >
 {
-	public void Configure(EntityTypeBuilder<Transaction> builder)
+	public void Configure(EntityTypeBuilder< Transaction > builder)
 	{
 		builder.HasKey( t => t.Id ) ;
 		builder.Property( t => t.Id ).ValueGeneratedOnAdd() ;
@@ -14,7 +14,9 @@ public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
 		builder.Property( t => t.Type ).IsRequired() ;
 		builder.Property( t => t.CategoryId ).IsRequired() ;
 		builder.Property( t => t.UserId ).IsRequired() ;
-		builder.HasOne( t => t.Category ).WithMany( c => c.Transactions ).HasForeignKey( t => t.CategoryId ).OnDelete( DeleteBehavior.Restrict ) ;
+
+		builder.HasOne( t => t.Category ).WithMany( c => c.Transactions ).HasForeignKey( t => t.CategoryId )
+			   .OnDelete( DeleteBehavior.Restrict ) ;
 	}
 }
 
