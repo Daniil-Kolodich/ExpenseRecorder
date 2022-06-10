@@ -1,35 +1,40 @@
 ﻿using ExpenseRecorder.Context ;
 using ExpenseRecorder.Models.Interfaces ;
 using ExpenseRecorder.Repositories.Interfaces ;
+using ExpenseRecorder.Services.Interfaces ;
 using Microsoft.EntityFrameworkCore ;
 
 namespace ExpenseRecorder.Repositories ;
 
 public class BaseRepository < T > : IBaseRepository< T >
-	where T : class , IEntity< T >
+	where T : class , IUserEntity< T >
 {
 	private readonly ExpenseRecorderContext _context ;
-
-	protected BaseRepository(ExpenseRecorderContext context)
+	private readonly IAuthenticationService _authenticationService ;
+	protected BaseRepository(ExpenseRecorderContext context , IAuthenticationService authenticationService)
 	{
-		_context = context ;
-		Data     = _context.Set< T >() ;
+		_context                    = context ;
+		_authenticationService = authenticationService ;
+		Data                        = _context.Set< T >() ;
 	}
 
-	public DbSet< T > Data { get ; }
+	public DbSet< T > Data   { get ; }
+	public string     UserId => _authenticationService.CurrentUser?.Id ?? throw new ArgumentException("No user logged in");
 
 	public virtual IQueryable< T > GetAllAsQueryable(bool tracking = false)
 	{
-		return tracking ? Data.AsQueryable() : Data.AsNoTracking() ;
+		return ( tracking ? Data.AsQueryable() : Data.AsNoTracking() ).Where( x => x.UserId == UserId ) ;
 	}
 
 	public virtual async Task< T? > GetAsync(int id , bool tracking = true)
 	{
-		return await ( tracking ? Data : Data.AsNoTracking() ).FirstOrDefaultAsync( x => x.Id == id ) ;
+		return await ( tracking ? Data : Data.AsNoTracking() ).FirstOrDefaultAsync( x =>
+			x.Id == id && x.UserId == UserId ) ;
 	}
 
 	public virtual async Task< T? > AddAsync(T entity)
 	{
+		entity.UserId = UserId ;
 		return ( await Data.AddAsync( entity ) ).Entity ;
 	}
 
@@ -38,7 +43,8 @@ public class BaseRepository < T > : IBaseRepository< T >
 		// TODO : what if i get as tracking ?
 		var old = await GetAsync( id , false ) ;
 
-		if ( old == null ) return null ;
+		if ( old        == null ) return null ;
+		if ( old.UserId != UserId ) return null ;
 
 		old.CopyFrom( entity ) ;
 		_context.Entry( old ).State = EntityState.Modified ;
@@ -50,7 +56,8 @@ public class BaseRepository < T > : IBaseRepository< T >
 	{
 		var entity = await GetAsync( id ) ;
 
-		if ( entity == null ) return null ;
+		if ( entity        == null ) return null ;
+		if ( entity.UserId != UserId ) return null ;
 
 		return Data.Remove( entity ).Entity ;
 	}

@@ -2,7 +2,7 @@
 
 namespace ExpenseRecorder.Models ;
 
-public class Category : IEntity< Category >
+public class Category : IUserEntity< Category >
 {
 	public string                     Name         { get ; set ; } = string.Empty ;
 	public string                     UserId       { get ; set ; } = string.Empty ;

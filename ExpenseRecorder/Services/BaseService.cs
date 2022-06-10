@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore ;
 namespace ExpenseRecorder.Services ;
 
 public class BaseService < T > : IBaseService< T >
-	where T : class , IEntity< T >
+	where T : class , IUserEntity< T >
 {
 	private protected readonly IBaseRepository< T > _repository ;
 	private readonly IUnitOfWork _unitOfWork ;
@@ -34,7 +34,7 @@ public class BaseService < T > : IBaseService< T >
 		return new Result< IEnumerable< T > >( result ) ;
 	}
 
-	public virtual async Task< Result< T > > GetAsync(int id , Func< T , bool >? predicate = null)
+	public virtual async Task< Result< T > > GetAsync(int id)
 	{
 		try
 		{
@@ -43,9 +43,6 @@ public class BaseService < T > : IBaseService< T >
 			if ( result is null )
 				return new Result< T >(
 					new NotFoundException( $"Unable to find {typeof(T)} with {id} to perform GetAsync" ) ) ;
-
-			if ( predicate is not null && !predicate( result ) )
-				return new Result< T >( new PredicateMismatchException( "Result doesn't fit predicate" ) ) ;
 
 			return new Result< T >( result ) ;
 		}
@@ -57,7 +54,6 @@ public class BaseService < T > : IBaseService< T >
 		try
 		{
 			var addedEntity = await _repository.AddAsync( entity ) ;
-
 
 			if ( addedEntity is null )
 				return new Result< T >( new BadRequestException( $"Unable to add {typeof(T)} to perform AddAsync" ) ) ;
@@ -73,7 +69,7 @@ public class BaseService < T > : IBaseService< T >
 		catch ( Exception ex ) { return new Result< T >( ex ) ; }
 	}
 
-	public virtual async Task< Result< T > > UpdateAsync(int id , T entity , Func< T , bool >? predicate = null)
+	public virtual async Task< Result< T > > UpdateAsync(int id , T entity)
 	{
 		try
 		{
@@ -82,9 +78,6 @@ public class BaseService < T > : IBaseService< T >
 			if ( oldEntity is null )
 				return new Result< T >(
 					new BadRequestException( $"Unable to find {typeof(T)} with {id} to perform UpdateAsync" ) ) ;
-
-			if ( predicate is not null && !predicate( oldEntity ) )
-				return new Result< T >( new PredicateMismatchException( "Result doesn't fit predicate" ) ) ;
 
 			var result = await _unitOfWork.SaveAsync() ;
 
@@ -97,7 +90,7 @@ public class BaseService < T > : IBaseService< T >
 		catch ( Exception ex ) { return new Result< T >( ex ) ; }
 	}
 
-	public virtual async Task< Result< T > > DeleteAsync(int id , Func< T , bool >? predicate = null)
+	public virtual async Task< Result< T > > DeleteAsync(int id)
 	{
 		try
 		{
@@ -106,9 +99,6 @@ public class BaseService < T > : IBaseService< T >
 			if ( deletedEntity is null )
 				return new Result< T >(
 					new NotFoundException( $"Unable to find {typeof(T)} with {id} to perform DeleteAsync" ) ) ;
-
-			if ( predicate is not null && !predicate( deletedEntity ) )
-				return new Result< T >( new PredicateMismatchException( "Result doesn't fit predicate" ) ) ;
 
 			var result = await _unitOfWork.SaveAsync() ;
 

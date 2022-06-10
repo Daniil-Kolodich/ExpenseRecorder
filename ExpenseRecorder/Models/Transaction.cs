@@ -2,13 +2,11 @@
 
 namespace ExpenseRecorder.Models ;
 
-public class Transaction : IEntity< Transaction >
+public class Transaction : IUserEntity< Transaction >
 {
 	public string? Description { get ; set ; }
 
 	public decimal Amount { get ; set ; }
-
-	// TODO ? Should there be many categories?
 	public int      CategoryId { get ; set ; }
 	public Category Category   { get ; set ; } = null! ;
 

@@ -1,5 +1,6 @@
 ﻿using ExpenseRecorder.Models ;
 using ExpenseRecorder.Models.Configurations ;
+using ExpenseRecorder.Services.Interfaces ;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore ;
 using Microsoft.EntityFrameworkCore ;
 
@@ -10,7 +11,7 @@ public sealed class ExpenseRecorderContext : IdentityDbContext< User >
 	public ExpenseRecorderContext(DbContextOptions< ExpenseRecorderContext > options)
 		: base( options )
 	{
-//		Database.EnsureDeleted() ;
+		//		Database.EnsureDeleted() ;
 		Database.EnsureCreated() ;
 	}
 

@@ -3,8 +3,9 @@
 namespace ExpenseRecorder.Repositories.Interfaces ;
 
 public interface IBaseRepository < T >
-	where T : class , IEntity< T >
+	where T : class , IUserEntity< T >
 {
+	string UserId { get ; }
 	IQueryable< T > GetAllAsQueryable(bool tracking           = false) ;
 	Task< T? >      GetAsync(int           id , bool tracking = true) ;
 	Task< T? >      AddAsync(T             entity) ;
