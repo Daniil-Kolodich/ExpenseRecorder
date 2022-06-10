@@ -14,12 +14,12 @@ public class TransactionRepository : BaseRepository< Transaction > , ITransactio
 
 	public override IQueryable< Transaction > GetAllAsQueryable(bool tracking = false)
 	{
-		return base.GetAllAsQueryable( tracking ).Include( t => t.Category ) ;
+		return base.GetAllAsQueryable( tracking ).Include( t => t.Category ).Include( t => t.PaymentAccount) ;
 	}
 
 	public override async Task< Transaction? > GetAsync(int id , bool tracking = true)
 	{
-		return await ( tracking ? Data : Data.AsNoTracking() ).Include( t => t.Category )
+		return await ( tracking ? Data : Data.AsNoTracking() ).Include( t => t.Category ).Include( t => t.PaymentAccount)
 															  .FirstOrDefaultAsync( x => x.Id == id && x.UserId == UserId ) ;
 	}
 }

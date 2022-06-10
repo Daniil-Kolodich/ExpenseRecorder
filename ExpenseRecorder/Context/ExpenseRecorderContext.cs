@@ -15,14 +15,15 @@ public sealed class ExpenseRecorderContext : IdentityDbContext< User >
 		Database.EnsureCreated() ;
 	}
 
-	public DbSet< Category >    Categories   { get ; set ; } = default! ;
-	public DbSet< Transaction > Transactions { get ; set ; } = default! ;
+	public DbSet< Category >       Categories      { get ; set ; } = default! ;
+	public DbSet< Transaction >    Transactions    { get ; set ; } = default! ;
+	public DbSet< PaymentAccount > PaymentAccounts { get ; set ; } = default! ;
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
 		if ( !optionsBuilder.IsConfigured )
 			optionsBuilder.UseSqlServer(
-				"Server=(localdb)\\mssqllocaldb;Database=expense_recorder_v1;Trusted_Connection=True;" ) ;
+				"Server=(localdb)\\mssqllocaldb;Database=expense_recorder_v2;Trusted_Connection=True;" ) ;
 
 		optionsBuilder.EnableSensitiveDataLogging() ;
 	}
@@ -32,5 +33,6 @@ public sealed class ExpenseRecorderContext : IdentityDbContext< User >
 		base.OnModelCreating( modelBuilder ) ;
 		modelBuilder.ApplyConfiguration( new CategoryConfiguration() ) ;
 		modelBuilder.ApplyConfiguration( new TransactionConfiguration() ) ;
+		modelBuilder.ApplyConfiguration( new PaymentAccountConfiguration() ) ;
 	}
 }

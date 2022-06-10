@@ -13,9 +13,13 @@ public class TransactionConfiguration : IEntityTypeConfiguration< Transaction >
 		builder.Property( t => t.Date ).IsRequired() ;
 		builder.Property( t => t.Type ).IsRequired() ;
 		builder.Property( t => t.CategoryId ).IsRequired() ;
+		builder.Property( t => t.PaymentAccountId ).IsRequired() ;
 		builder.Property( t => t.UserId ).IsRequired() ;
 
 		builder.HasOne( t => t.Category ).WithMany( c => c.Transactions ).HasForeignKey( t => t.CategoryId )
+			   .OnDelete( DeleteBehavior.Restrict ) ;
+		
+		builder.HasOne( t => t.PaymentAccount ).WithMany( c => c.Transactions ).HasForeignKey( t => t.PaymentAccountId )
 			   .OnDelete( DeleteBehavior.Restrict ) ;
 	}
 }

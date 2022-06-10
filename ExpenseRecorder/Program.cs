@@ -58,7 +58,8 @@ builder.Services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme ).Add
 	} ;
 } ) ;
 
-builder.Services.AddAutoMapper( typeof(UserProfile) , typeof(CategoryProfile) , typeof(TransactionProfile) ) ;
+builder.Services.AddAutoMapper( typeof(UserProfile) , typeof(CategoryProfile) , typeof(TransactionProfile) ,
+	typeof(PaymentAccountProfile) ) ;
 
 builder.Services.AddAuthorization() ;
 
@@ -76,6 +77,9 @@ builder.Services.AddScoped< ICategoryService , CategoryService >() ;
 
 builder.Services.AddScoped< ITransactionRepository , TransactionRepository >() ;
 builder.Services.AddScoped< ITransactionService , TransactionService >() ;
+
+builder.Services.AddScoped< IPaymentAccountRepository , PaymentAccountRepository >() ;
+builder.Services.AddScoped< IPaymentAccountService , PaymentAccountService >() ;
 
 builder.Services.AddScoped< IUserService , UserService >() ;
 

@@ -23,7 +23,7 @@ public class BaseRepository < T > : IBaseRepository< T >
 
 	public virtual IQueryable< T > GetAllAsQueryable(bool tracking = false)
 	{
-		return ( tracking ? Data.AsQueryable() : Data.AsNoTracking() ).Where( x => x.UserId == UserId ) ;
+		return ( tracking ? Data.AsTracking() : Data.AsNoTracking() ).Where( x => x.UserId == UserId ) ;
 	}
 
 	public virtual async Task< T? > GetAsync(int id , bool tracking = true)
