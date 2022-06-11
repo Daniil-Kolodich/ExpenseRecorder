@@ -40,10 +40,7 @@ public class PaymentAccountSearchOptions : IPaymentAccountSearchOptions
 
 	private void ByBalance()
 	{
-		if ( BalanceFrom < BalanceTo && BalanceFrom > 0 )
-		{
-			_searchOptions.Add( x => x.Balance >= BalanceFrom ) ;
-			_searchOptions.Add( x => x.Balance <= BalanceTo ) ;
-		}
+		if ( BalanceTo > 0 ) { _searchOptions.Add( x => x.Balance <= BalanceTo ) ; }
+		if ( BalanceFrom >= 0 ) { _searchOptions.Add( x => x.Balance >= BalanceFrom ) ; }
 	}
 }

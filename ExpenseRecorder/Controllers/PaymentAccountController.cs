@@ -39,9 +39,9 @@ public class PaymentAccountController : ControllerBase
 
 	[ HttpGet ]
 	[ Route( "GetAll" ) ]
-	public async Task< ActionResult< IEnumerable< PaymentAccountResponse > > > GetAll()
+	public async Task< ActionResult< IEnumerable< PaymentAccountResponse > > > GetAll([FromQuery] PaymentAccountSearchOptions options)
 	{
-		var response = await _paymentAccountService.GetAllAsync() ;
+		var response = await _paymentAccountService.GetAllAsync(options) ;
 
 		return response.Match< ActionResult< IEnumerable< PaymentAccountResponse > > >(
 			success => Ok( _mapper.Map< IEnumerable< PaymentAccountResponse > >( success ) ) ,
