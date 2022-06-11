@@ -3,6 +3,7 @@ using ExpenseRecorder.DTO.Requests.PaymentAccount ;
 using ExpenseRecorder.DTO.Responses.PaymentAccount ;
 using ExpenseRecorder.Exceptions ;
 using ExpenseRecorder.Models ;
+using ExpenseRecorder.SearchHandlers.Options ;
 using ExpenseRecorder.Services.Interfaces ;
 using Microsoft.AspNetCore.Authorization ;
 using Microsoft.AspNetCore.Mvc ;

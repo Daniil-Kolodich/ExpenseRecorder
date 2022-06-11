@@ -2,6 +2,8 @@
 using ExpenseRecorder.Exceptions ;
 using ExpenseRecorder.Models.Interfaces ;
 using ExpenseRecorder.Repositories.Interfaces ;
+using ExpenseRecorder.SearchHandlers.Options.Interfaces ;
+using ExpenseRecorder.SearchHandlers.Queries.Interfaces ;
 using ExpenseRecorder.Services.Interfaces ;
 using ExpenseRecorder.UnitOfWork.Interfaces ;
 using LanguageExt.Common ;
@@ -13,21 +15,21 @@ public class BaseService < T > : IBaseService< T >
 	where T : class , IUserEntity< T >
 {
 	private protected readonly IBaseRepository< T > _repository ;
-	private readonly IUnitOfWork _unitOfWork ;
-	private protected IList< Expression< Func< T , bool > > > _filters = new List< Expression< Func< T , bool > > >() ;
+	private readonly           IUnitOfWork          _unitOfWork ;
+	private readonly           ISearchQuery< T >?   _queryBuilder ;
 
-	public BaseService(IBaseRepository< T > repository , IUnitOfWork unitOfWork)
+	public BaseService(IBaseRepository< T > repository , IUnitOfWork unitOfWork , ISearchQuery< T >? queryBuilder = null)
 	{
-		_repository = repository ;
-		_unitOfWork = unitOfWork ;
+		_repository   = repository ;
+		_unitOfWork   = unitOfWork ;
+		_queryBuilder = queryBuilder ;
 	}
 
-	public virtual async Task< Result< IEnumerable< T > > > GetAllAsync()
+	public virtual async Task< Result< IEnumerable< T > > > GetAllAsync(ISearchOptions< T >? searchOptions = null)
 	{
 		var query = _repository.GetAllAsQueryable() ;
 
-		if ( _filters.Any() )
-			query = _filters.Aggregate( query , (current , filter) => current.Where( filter ) ) ;
+		if ( searchOptions is not null ) { query = _queryBuilder?.SetBaseQuery( query ).Build( searchOptions ) ?? query ; }
 
 		var result = await query.ToListAsync() ;
 

@@ -5,6 +5,10 @@ using ExpenseRecorder.Mapping ;
 using ExpenseRecorder.Models ;
 using ExpenseRecorder.Repositories ;
 using ExpenseRecorder.Repositories.Interfaces ;
+using ExpenseRecorder.SearchHandlers.Options ;
+using ExpenseRecorder.SearchHandlers.Options.Interfaces ;
+using ExpenseRecorder.SearchHandlers.Queries ;
+using ExpenseRecorder.SearchHandlers.Queries.Interfaces ;
 using ExpenseRecorder.Services ;
 using ExpenseRecorder.Services.Interfaces ;
 using ExpenseRecorder.UnitOfWork ;
@@ -80,7 +84,7 @@ builder.Services.AddScoped< ITransactionService , TransactionService >() ;
 
 builder.Services.AddScoped< IPaymentAccountRepository , PaymentAccountRepository >() ;
 builder.Services.AddScoped< IPaymentAccountService , PaymentAccountService >() ;
-
+builder.Services.AddScoped< IPaymentAccountSearchQuery , PaymentAccountSearchQuery >() ;
 builder.Services.AddScoped< IUserService , UserService >() ;
 
 builder.Services.AddScoped< IAuthenticationService , AuthenticationService >() ;
