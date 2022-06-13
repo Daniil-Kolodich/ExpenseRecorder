@@ -1,22 +1,20 @@
 import { Component } from '@angular/core';
 
-@Component( {
-  selector : 'app-nav-menu' ,
-  templateUrl : './nav-menu.component.html' ,
-  styleUrls : [ './nav-menu.component.scss' ]
+@Component ( {
+	selector : 'app-nav-menu' , templateUrl : './nav-menu.component.html' , styleUrls : [ './nav-menu.component.scss' ]
 } )
 export class NavMenuComponent {
-  isExpanded = false;
+	isExpanded = false;
 
-  public isAuthenticated() : boolean {
-    return localStorage.getItem( 'token' ) !== null;
-  }
+	public isAuthenticated () : boolean {
+		return localStorage.getItem ( 'token' ) !== null;
+	}
 
-  collapse() {
-    this.isExpanded = false;
-  }
+	collapse () {
+		this.isExpanded = false;
+	}
 
-  toggle() {
-    this.isExpanded = !this.isExpanded;
-  }
+	toggle () {
+		this.isExpanded = !this.isExpanded;
+	}
 }

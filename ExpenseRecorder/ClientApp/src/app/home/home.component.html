@@ -1,13 +1,13 @@
 <div>
-  <h1>This is home component</h1>
-  <div *ngIf = "!IsAuthenticated">
-    <button (click) = "signIn()">Sign In</button>
-    <button (click) = "signUp()">Sign Up</button>
-  </div>
+	<h1>This is home component</h1>
+	<div *ngIf = "!IsAuthenticated">
+		<button (click) = "signIn()">Sign In</button>
+		<button (click) = "signUp()">Sign Up</button>
+	</div>
 
-  <div *ngIf = "IsAuthenticated">
-    <h3>Welcome {{ UserName }}</h3>
-    <button (click) = "signOut()">Sign Out</button>
-    <!--    <payment-account-list></payment-account-list>-->
-  </div>
+	<div *ngIf = "IsAuthenticated">
+		<h3>Welcome {{ UserName }}</h3>
+		<button (click) = "signOut()">Sign Out</button>
+		<!--    <payment-account-list></payment-account-list>-->
+	</div>
 </div>

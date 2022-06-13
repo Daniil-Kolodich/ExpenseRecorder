@@ -1,33 +1,31 @@
-import { Component , Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 
-@Component( {
-  selector : 'app-home' ,
-  templateUrl : './home.component.html'
+@Component ( {
+	selector : 'app-home' , templateUrl : './home.component.html'
 } )
 export class HomeComponent {
-  public get IsAuthenticated() : boolean {
-    return localStorage.getItem( 'token' ) !== null;
-  }
+	constructor ( private router : Router ) {}
 
-  public get UserName() : string {
-    return localStorage.getItem( 'userName' ) ?? '';
-  }
+	public get IsAuthenticated () : boolean {
+		return localStorage.getItem ( 'token' ) !== null;
+	}
 
-  constructor( private router : Router , private authenticationService : AuthenticationService ) {}
+	public get UserName () : string {
+		return localStorage.getItem ( 'userName' ) ?? '';
+	}
 
-  public signIn() {
-    this.router.navigate( [ '/sign_in' ] );
-  }
+	public signIn () {
+		this.router.navigate ( [ '/sign_in' ] );
+	}
 
-  public signUp() {
-    this.router.navigate( [ '/sign_up' ] );
-  }
+	public signUp () {
+		this.router.navigate ( [ '/sign_up' ] );
+	}
 
-  public signOut() {
-    localStorage.removeItem( 'token' );
-    localStorage.removeItem( 'userName' );
-  }
+	public signOut () {
+		localStorage.removeItem ( 'token' );
+		localStorage.removeItem ( 'userName' );
+	}
 }
