@@ -19,10 +19,18 @@ using Microsoft.EntityFrameworkCore ;
 using Microsoft.IdentityModel.Tokens ;
 using Microsoft.OpenApi.Models ;
 
+var corsPolicy = "CorsPolicy" ; 
+
 var builder = WebApplication.CreateBuilder( args ) ;
+
 
 builder.Services.AddControllers()
 	   .AddJsonOptions( j => j.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles ) ;
+
+builder.Services.AddCors( options =>
+{
+	options.AddPolicy( corsPolicy , b => { b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader() ; } ) ;
+} ) ;
 
 builder.Services.AddEndpointsApiExplorer() ;
 
@@ -102,7 +110,7 @@ if ( app.Environment.IsDevelopment() )
 }
 
 app.UseHttpsRedirection() ;
-
+app.UseCors(corsPolicy);
 app.UseAuthentication() ;
 app.UseAuthorization() ;
 

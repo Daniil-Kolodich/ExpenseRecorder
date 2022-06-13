@@ -8,7 +8,7 @@ namespace ExpenseRecorder.Services ;
 public class AuthenticationService : IAuthenticationService
 {
 	private readonly IHttpContextAccessor _httpContextAccessor ;
-	private readonly UserManager< User >  _userManager ;
+	private readonly UserManager< User >  _userManager ; // TODO do i need this?
 
 	public AuthenticationService(IHttpContextAccessor httpContextAccessor , UserManager< User > userManager)
 	{
