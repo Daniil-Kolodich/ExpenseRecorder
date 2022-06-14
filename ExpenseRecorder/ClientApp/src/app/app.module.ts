@@ -15,27 +15,32 @@ import { PaymentAccountComponent } from './modules/payment-account/payment-accou
 import { PaymentAccountModule , paymentAccountRoutes } from './modules/payment-account/payment-account.module';
 
 
-let routes = [ { path : '*' , redirectTo : '' } , { path : '' , component : HomeComponent , pathMatch : 'full' } ,
-               { path : 'sign_in' , component : SignInComponent } , { path : 'sign_up' , component : SignUpComponent } ,
-               {
-	               path : 'payment_accounts' , component : PaymentAccountComponent , children : paymentAccountRoutes
-               } ];
+let routes = [
+	{ path : '*' , redirectTo : '' } ,
+	{ path : '' , component : HomeComponent , pathMatch : 'full' } ,
+	{ path : 'sign_in' , component : SignInComponent } ,
+	{ path : 'sign_up' , component : SignUpComponent } ,
+	{
+		path : 'payment_accounts' , component : PaymentAccountComponent , children : paymentAccountRoutes
+	}
+];
 
 @NgModule ( {
-	declarations                                                                                        : [ AppComponent ,
-	                                                                                                        NavMenuComponent ,
-	                                                                                                        HomeComponent ,
-	                                                                                                        CounterComponent ,
-	                                                                                                        FetchDataComponent ,
-	                                                                                                        SignInComponent ,
-	                                                                                                        SignUpComponent
+	declarations :  [
+		AppComponent ,
+		NavMenuComponent ,
+		HomeComponent ,
+		CounterComponent ,
+		FetchDataComponent ,
+		SignInComponent ,
+		SignUpComponent
 		// TODO Extract sign in and sign up as separate module
-	] ,
-	imports                                                                                             : [ BrowserModule.withServerTransition (
-		{ appId : 'ng-cli-universal' } ) , HttpClientModule , FormsModule , PaymentAccountModule ,
-	                                                                                                        RouterModule.forRoot (
-		                                                                                                        routes ) ] ,
-	providers                                                                                           : [] ,
-	bootstrap                                                                                           : [ AppComponent ]
+	] , imports :   [
+		BrowserModule.withServerTransition ( { appId : 'ng-cli-universal' } ) ,
+		HttpClientModule ,
+		FormsModule ,
+		PaymentAccountModule ,
+		RouterModule.forRoot ( routes )
+	] , providers : [] , bootstrap : [ AppComponent ]
 } )
 export class AppModule {}

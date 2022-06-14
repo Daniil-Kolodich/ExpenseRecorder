@@ -1,16 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'styles/bootstrap';
 
-/* Provide sufficient contrast against white background */
-a {
-	color : #0366d6;
-}
+$app-font : 'Open Sans', 'Helvetica Neue', sans-serif !default;
 
-code {
-	color : #e01a76;
-}
+html, body { height : 100%; }
 
-.btn-primary {
-	color            : #ffffff;
-	background-color : #1b6ec2;
-	border-color     : #1861ac;
-}
+body { margin : 0; font-family : $app-font; color : black; }
+
+input, select, button { font-family : inherit; }
+
+* { box-sizing : border-box; }
+
+*[hidden] { display : none !important; }

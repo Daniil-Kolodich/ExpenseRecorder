@@ -1,0 +1,42 @@
+$grid-gutter-width    : 16px;
+$grid-breakpoints     : (
+		xs: 0,
+		sm: 576px,
+		md: 768px,
+		lg: 992px,
+		xl: 1200px,
+		xxl: 1400px
+);
+
+$container-max-widths : (
+		xs: 576px,
+		sm: 768px,
+		md: 992px,
+		lg: 1200px,
+		xl: 1400px,
+		xxl: 1920px
+);
+.container {
+	padding : 0 32px !important;
+}
+
+@import '~bootstrap/scss/bootstrap-grid';
+
+@include media-breakpoint-down(sm) {
+	.container {
+		padding : 0 16px !important;
+	}
+	//.row {
+	//	margin-left: -8px;
+	//	margin-right: -8px;
+	//}
+	//
+	//.row > .col,
+	//.row > [class*="col-"] {
+	//	padding-right: 8px;
+	//	padding-left: 8px;
+	//}z
+}
+
+@import '~bootstrap/scss/bootstrap-grid';
+
