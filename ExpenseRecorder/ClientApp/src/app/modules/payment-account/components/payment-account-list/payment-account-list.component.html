@@ -1,0 +1,13 @@
+<div *ngIf = "paymentAccounts !== undefined">
+	<div class = "row er-payment-account-list__items">
+		<div class = "col-sm-6 col-lg-4 col-12 er-payment-account-list__items__button-container">
+			<button (click) = "add()" class = "er-payment-account-list__items__button-container__button"
+			        type = "button">Add payment account
+			</button>
+		</div>
+		<payment-account-item
+				*ngFor = "let paymentAccount of paymentAccounts"
+				[paymentAccount] = "paymentAccount"
+				class = "col-sm-6 col-lg-4 col-12 er-payment-account-list__items__item"></payment-account-item>
+	</div>
+</div>

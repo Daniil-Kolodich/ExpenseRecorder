@@ -1,0 +1,37 @@
+<div class = "er-payment-account-item-view">
+	<p> This is item view </p>
+	<div>
+		<button (click) = "onBack()" class = "btn btn-sm btn-outline-info">Back</button>
+		<button (click) = "onDelete()"
+		        *ngIf = "isDeletable()" class = "btn btn-sm btn-outline-danger">Delete
+		</button>
+		<!--		TODO: rethink that stuff-->
+		<div *ngIf = "isEditable()">
+			<button (click) = "onEdit()"
+			        *ngIf = "!isEditing" class = "btn btn-sm btn-outline-success">Edit
+			</button>
+			<button (click) = "onEdit()"
+			        *ngIf = "isEditing" class = "btn btn-sm btn-outline-warning">Cancel
+			</button>
+		</div>
+	</div>
+	<div *ngIf = "!isFormVisible()" class = "er-payment-account-item-view__view">
+		<h2>{{ this.paymentAccount?.name ?? ''}}</h2>
+		<h4>{{ this.paymentAccount?.balance ?? ''}} {{ this.paymentAccount?.currency ?? '' }}</h4>
+	</div>
+	<div *ngIf = "isFormVisible() && this.form !== undefined" class = "er-payment-account-item-view__form">
+		<form (ngSubmit) = "onSubmit()" [formGroup] = "form">
+			<er-input [parentForm] = "form" controlName = "name" placeholder = "Name for Payment Account"></er-input>
+			<er-select [items] = "availableCurrencies()" [parentForm] = "form" controlName = "currency"></er-select>
+			<er-input [parentForm] = "form" controlName = "balance" placeholder = "Start Balance"></er-input>
+			<div>
+				<button class = "btn btn-sm btn-outline-dark">{{ isCreating ? 'Add' : 'Save' }}</button>
+			</div>
+		</form>
+	</div>
+	<div *ngIf = "isTransactionsVisible()" class = "er-payment-account-item-view__transactions">
+		<p>transaction 1</p>
+		<p>transaction 2</p>
+		<p>transaction 3</p>
+	</div>
+</div>

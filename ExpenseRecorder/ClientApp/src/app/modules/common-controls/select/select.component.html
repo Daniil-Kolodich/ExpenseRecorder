@@ -1,0 +1,13 @@
+<div class = "er-select-container">
+	<select
+			[formControl] = "control"
+			[name] = "controlName"
+			class = "er-select-container__select"
+			type = "text">
+		<option *ngFor = "let item of items">
+			{{item}}
+		</option>
+	</select>
+</div>
+<er-control-validation [control] = "control"></er-control-validation>
+

@@ -1,0 +1,5 @@
+<div *ngIf = "control && control.touched && control.invalid">
+	<div class = "alert alert-danger" role = "alert">
+		Something wrong {{control.errors | json}}
+	</div>
+</div>
