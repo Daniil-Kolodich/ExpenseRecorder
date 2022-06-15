@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS , HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -13,6 +13,8 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { PaymentAccountComponent } from './modules/payment-account/payment-account.component';
 import { PaymentAccountModule , paymentAccountRoutes } from './modules/payment-account/payment-account.module';
+import { ErrorNotificationInterceptor } from './modules/error-handler/error-notification.interceptor';
+import { ErrorNotificationModule } from './modules/error-handler/error-notification.module';
 
 
 let routes = [
@@ -36,11 +38,16 @@ let routes = [
 		SignUpComponent
 		// TODO Extract sign in and sign up as separate module
 	] , imports :   [
+		ErrorNotificationModule,
 		BrowserModule.withServerTransition ( { appId : 'ng-cli-universal' } ) ,
 		HttpClientModule ,
 		FormsModule ,
 		PaymentAccountModule ,
 		RouterModule.forRoot ( routes )
-	] , providers : [] , bootstrap : [ AppComponent ]
+	] , providers : [
+		{
+			provide : HTTP_INTERCEPTORS , useClass : ErrorNotificationInterceptor , multi : true
+		}
+	] , bootstrap : [ AppComponent ]
 } )
 export class AppModule {}
