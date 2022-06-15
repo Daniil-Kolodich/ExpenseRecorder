@@ -1,0 +1,11 @@
+.er-error-notification {
+	height: 100px;
+	position: absolute;
+	display: inline-flex;
+	background-color: rgba(lighten(red,24),0.95);
+	border: solid 5px darkred;
+	border-radius: 40px 10px;
+	justify-content: center;
+	align-items: center;
+	right : 0;
+}
