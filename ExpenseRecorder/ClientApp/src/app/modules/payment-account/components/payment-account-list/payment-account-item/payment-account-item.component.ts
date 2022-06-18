@@ -1,6 +1,6 @@
 import { Component , Input , OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PaymentAccountItem } from '../../../models/paymentAccountModels';
+import { PaymentAccountItem } from '../../../models/payment-account';
 
 @Component ( {
 	selector :    'payment-account-item' ,

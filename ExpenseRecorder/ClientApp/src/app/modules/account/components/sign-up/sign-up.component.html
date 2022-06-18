@@ -1,0 +1,12 @@
+<div>
+	<form (ngSubmit) = "onSignUp()" [formGroup] = "form">
+		<er-input [parentForm] = "form" controlName = "userName" placeholder = "userName"></er-input>
+		<er-input [parentForm] = "form" controlName = "email" placeholder = "email"></er-input>
+		<er-input [parentForm] = "form" type="password" controlName = "password" placeholder = "password"></er-input>
+		<er-input [parentForm] = "form" type="password" controlName = "confirmPassword" placeholder = "confirm password"></er-input>
+		<div>
+			<button class = "btn btn-sm btn-outline-dark">Sign Up</button>
+		</div>
+	</form>
+</div>
+

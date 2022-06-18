@@ -1,7 +1,7 @@
 import { Component , OnInit } from '@angular/core';
-import { PaymentAccountService } from '../../../../services/payment-account.service';
+import { PaymentAccountService } from '../../payment-account.service';
 import { Router } from '@angular/router';
-import { PaymentAccountItem } from '../../models/paymentAccountModels';
+import { PaymentAccountItem } from '../../models/payment-account';
 
 @Component ( {
 	selector :    'payment-account-list' ,

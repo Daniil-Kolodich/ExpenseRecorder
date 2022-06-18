@@ -3,7 +3,7 @@ import { HttpClient , HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
 	PaymentAccountCreateUpdateItem , PaymentAccountItem , PaymentAccountViewItem
-} from '../modules/payment-account/models/paymentAccountModels';
+} from './models/payment-account';
 
 @Injectable ( {
 	providedIn : 'root'
@@ -39,8 +39,6 @@ export class PaymentAccountService {
 	}
 
 	private getHeaders () : HttpHeaders {
-		return new HttpHeaders ( {
-			'Authorization' : 'Bearer ' + localStorage.getItem ( 'token' )
-		} );
+		return new HttpHeaders ( {} );
 	}
 }

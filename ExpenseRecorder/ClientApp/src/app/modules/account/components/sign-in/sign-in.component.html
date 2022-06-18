@@ -1,0 +1,18 @@
+<div>
+	<form (ngSubmit) = "signIn()" [formGroup] = "form">
+		<er-input [parentForm] = "form" controlName = "userName" placeholder = "userName"></er-input>
+		<er-input [parentForm] = "form" type="password" controlName = "password" placeholder = "password"></er-input>
+		<div>
+			<button class = "btn btn-sm btn-outline-dark">Sign In</button>
+		</div>
+	</form>
+</div>
+
+
+<!--<label for = "userNameInput">Ur username plz</label>-->
+<!--<input [(ngModel)] = "signInRequest.userName" id = "userNameInput" placeholder = "userName" type = "text"/>-->
+<!--<br/>-->
+<!--<label for = "passwordInput">Ur password plz</label>-->
+<!--<input [(ngModel)] = "signInRequest.password" id = "passwordInput" placeholder = "password" type = "password"/>-->
+<!--<br/>-->
+<!--<button (click) = "signIn()" type = "submit">Sign In</button>-->

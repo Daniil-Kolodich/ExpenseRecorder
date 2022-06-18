@@ -1,0 +1,28 @@
+.er-btn {
+	display          : block;
+	min-height       : 50px;
+	min-width        : 250px;
+	border           : solid 4px violet;
+	background-color : white;
+	color            : violet;
+	text-align       : center;
+	text-decoration  : none;
+	font-size        : 1.5em;
+	font-weight      : bold;
+	line-height      : 1.5;
+	cursor           : pointer;
+
+	&--secondary {
+		text-align       : center;
+		text-decoration  : none;
+		font-size        : 1.25em;
+		font-weight      : bold;
+		line-height      : 1.5;
+		cursor           : pointer;
+		min-height: 40px;
+		min-width : 220px;
+		border-color : white;
+		background-color : violet;
+		color : white;
+	}
+}

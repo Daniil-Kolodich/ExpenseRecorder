@@ -1,0 +1,20 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins/breakpoints';
+
+.er-account-config {
+	&__content {
+		margin-top : 15vh;
+		height     : 50vh;
+		min-height : 400px;
+
+		@include media-breakpoint-down(lg) {
+			height     : 60vh;
+			margin-top : 15vh;
+		}
+		@include media-breakpoint-down(sm) {
+			height     : 70vh;
+			margin-top : 10vh;
+		}
+	}
+}

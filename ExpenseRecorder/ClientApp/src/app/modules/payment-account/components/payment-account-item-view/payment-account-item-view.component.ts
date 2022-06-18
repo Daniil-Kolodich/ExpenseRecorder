@@ -1,6 +1,6 @@
 import { Component , OnInit } from '@angular/core';
-import { PaymentAccountCreateUpdateItem , PaymentAccountViewItem } from '../../models/paymentAccountModels';
-import { PaymentAccountService } from '../../../../services/payment-account.service';
+import { PaymentAccountCreateUpdateItem , PaymentAccountViewItem } from '../../models/payment-account';
+import { PaymentAccountService } from '../../payment-account.service';
 import { ActivatedRoute , Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormControl , FormGroup , Validators } from '@angular/forms';

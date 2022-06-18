@@ -1,0 +1,28 @@
+.er-account {
+	width: 100%;
+	height: 100%;
+	border: solid 2px violet;
+	border-radius: .25rem;
+	margin: 0;
+	padding: 10px 15px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+
+	&__actions {
+		width: 300px;
+		height: 200px;
+		&__not-auth {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			& button {
+				width: 100%;
+				margin: 12px;
+				max-height: 100%;
+			}
+		}
+	}
+}

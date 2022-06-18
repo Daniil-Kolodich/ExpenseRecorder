@@ -1,0 +1,18 @@
+<div class = "er-account">
+	<div class = "er-account__title">
+		<h3>Welcome to ExpenseRecorder !</h3>
+		<h3 *ngIf = "isAuthenticated">U r logged in as : {{ User }}</h3>
+	</div>
+	<div class = "er-account__actions">
+		<div *ngIf = "!isAuthenticated; else auth" class = "er-account__actions__not-auth">
+			<button class = "er-btn" (click) = "onSignIn()">Sign In</button>
+			<button class = "er-btn--secondary" (click) = "onSignUp()">Sign Up
+			</button>
+		</div>
+		<ng-template #auth>
+			<div class = "er-account__actions__auth">
+				<button class = "er-btn" (click) = "onLogout()">Logout</button>
+			</div>
+		</ng-template>
+	</div>
+</div>

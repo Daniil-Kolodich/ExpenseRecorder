@@ -9,45 +9,37 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { SignInComponent } from './sign-in/sign-in.component';
-import { SignUpComponent } from './sign-up/sign-up.component';
 import { PaymentAccountComponent } from './modules/payment-account/payment-account.component';
 import { PaymentAccountModule , paymentAccountRoutes } from './modules/payment-account/payment-account.module';
 import { ErrorNotificationInterceptor } from './modules/error-handler/error-notification.interceptor';
 import { ErrorNotificationModule } from './modules/error-handler/error-notification.module';
+import { AccountConfigModule , accountRoutes } from './modules/account/account-config.module';
+import { AuthenticationInterceptor } from './modules/account/authentication.interceptor';
+import { AccountConfigComponent } from './modules/account/account-config.component';
 
 
 let routes = [
 	{ path : '*' , redirectTo : '' } ,
 	{ path : '' , component : HomeComponent , pathMatch : 'full' } ,
-	{ path : 'sign_in' , component : SignInComponent } ,
-	{ path : 'sign_up' , component : SignUpComponent } ,
-	{
-		path : 'payment_accounts' , component : PaymentAccountComponent , children : paymentAccountRoutes
-	}
+	{ path : 'account' , component : AccountConfigComponent , children : accountRoutes } ,
+	{ path : 'payment_accounts' , component : PaymentAccountComponent , children : paymentAccountRoutes }
 ];
 
 @NgModule ( {
 	declarations :  [
-		AppComponent ,
-		NavMenuComponent ,
-		HomeComponent ,
-		CounterComponent ,
-		FetchDataComponent ,
-		SignInComponent ,
-		SignUpComponent
+		AppComponent , NavMenuComponent , HomeComponent , CounterComponent , FetchDataComponent
 		// TODO Extract sign in and sign up as separate module
 	] , imports :   [
-		ErrorNotificationModule,
+		ErrorNotificationModule ,
+		AccountConfigModule ,
+		PaymentAccountModule ,
 		BrowserModule.withServerTransition ( { appId : 'ng-cli-universal' } ) ,
 		HttpClientModule ,
 		FormsModule ,
-		PaymentAccountModule ,
 		RouterModule.forRoot ( routes )
 	] , providers : [
-		{
-			provide : HTTP_INTERCEPTORS , useClass : ErrorNotificationInterceptor , multi : true
-		}
+		{ provide : HTTP_INTERCEPTORS , useClass : ErrorNotificationInterceptor , multi : true } ,
+		{ provide : HTTP_INTERCEPTORS , useClass : AuthenticationInterceptor , multi : true }
 	] , bootstrap : [ AppComponent ]
 } )
 export class AppModule {}
