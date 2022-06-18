@@ -11,7 +11,7 @@ public sealed class ExpenseRecorderContext : IdentityDbContext< User >
 	public ExpenseRecorderContext(DbContextOptions< ExpenseRecorderContext > options)
 		: base( options )
 	{
-		//		Database.EnsureDeleted() ;
+//		Database.EnsureDeleted() ;
 		Database.EnsureCreated() ;
 	}
 

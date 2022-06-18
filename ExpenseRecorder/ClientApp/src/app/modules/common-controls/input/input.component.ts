@@ -8,6 +8,7 @@ export class InputComponent implements OnInit {
 	@Input () public parentForm! : FormGroup;
 	@Input () public controlName! : string;
 	@Input () public placeholder : string = '';
+	@Input() public type: string = 'text';
 	public control! : FormControl;
 	@HostBinding ( 'class' ) @Input () public class = 'col-12 er-input';
 

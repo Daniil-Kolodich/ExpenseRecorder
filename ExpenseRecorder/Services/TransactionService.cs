@@ -23,12 +23,6 @@ public class TransactionService : BaseService< Transaction > , ITransactionServi
 		_paymentAccountRepository = paymentAccountRepository ;
 	}
 
-//	public override async Task< Result< IEnumerable< Transaction > > > GetAllAsync()
-//	{
-//		TODO : add query to customize the result
-//		return await base.GetAllAsync() ;
-//	}
-
 	public override async Task< Result< Transaction > > AddAsync(Transaction entity)
 	{
 		var category = await _categoryRepository.GetAsync( entity.CategoryId ) ;

@@ -9,7 +9,7 @@ public class TransactionConfiguration : IEntityTypeConfiguration< Transaction >
 	{
 		builder.HasKey( t => t.Id ) ;
 		builder.Property( t => t.Id ).ValueGeneratedOnAdd() ;
-		builder.Property( t => t.Amount ).IsRequired() ;
+		builder.Property( t => t.Amount ).IsRequired().HasPrecision(18,4) ;
 		builder.Property( t => t.Date ).IsRequired() ;
 		builder.Property( t => t.Type ).IsRequired() ;
 		builder.Property( t => t.CategoryId ).IsRequired() ;

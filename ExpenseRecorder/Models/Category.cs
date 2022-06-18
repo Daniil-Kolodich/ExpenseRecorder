@@ -12,7 +12,6 @@ public class Category : IUserEntity< Category >
 
 	public int Id { get ; set ; }
 
-	// TODO extend copy from
 	public void CopyFrom(Category entity)
 	{
 		Name  = entity.Name ;

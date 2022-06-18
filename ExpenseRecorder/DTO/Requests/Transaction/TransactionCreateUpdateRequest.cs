@@ -8,5 +8,5 @@ public class TransactionCreateUpdateRequest
 	public int      CategoryId       { get ; set ; }
 	public int      PaymentAccountId { get ; set ; }
 	public DateTime Date             { get ; set ; }
-	public string   Type             { get ; set ; }
+	public string   Type             { get ; set ; } = String.Empty ;
 }

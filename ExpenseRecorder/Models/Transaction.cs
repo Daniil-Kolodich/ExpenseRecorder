@@ -4,7 +4,7 @@ namespace ExpenseRecorder.Models ;
 
 public class Transaction : IUserEntity< Transaction >
 {
-	public string UserId { get ; set ; }
+	public string UserId { get ; set ; } = String.Empty ;
 	public int    Id     { get ; set ; }
 
 

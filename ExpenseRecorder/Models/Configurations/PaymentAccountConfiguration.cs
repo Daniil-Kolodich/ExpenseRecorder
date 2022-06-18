@@ -12,7 +12,7 @@ public class PaymentAccountConfiguration : IEntityTypeConfiguration< PaymentAcco
 		builder.Property( c => c.UserId ).IsRequired() ;
 		
 		builder.Property( c => c.Name ).IsRequired() ;
-		builder.Property( c => c.Balance ).IsRequired() ;
+		builder.Property( c => c.Balance ).IsRequired().HasPrecision( 18 , 4 ) ;
 		builder.Property( c => c.Currency ).IsRequired() ;
 	}
 }

@@ -53,7 +53,6 @@ public class PaymentAccountController : ControllerBase
 	public async Task< ActionResult< PaymentAccountResponse > > Get(int id)
 	{
 		var result = await _paymentAccountService.GetAsync( id ) ;
-
 		return result.Match< ActionResult< PaymentAccountResponse > >(
 			success => Ok( _mapper.Map< PaymentAccountResponse >( success ) ) ,
 			failure => MapExceptionsToActionResults( failure ) ) ;

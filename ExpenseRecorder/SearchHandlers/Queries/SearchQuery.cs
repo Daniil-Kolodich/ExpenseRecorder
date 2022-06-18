@@ -7,7 +7,7 @@ namespace ExpenseRecorder.SearchHandlers.Queries ;
 public class SearchQuery < T > : ISearchQuery< T >
 	where T : class , IUserEntity< T >
 {
-	private protected IQueryable< T >? _query = null! ;
+	private IQueryable< T >? _query;
 
 	public ISearchQuery< T > SetBaseQuery(IQueryable< T > baseQuery)
 	{

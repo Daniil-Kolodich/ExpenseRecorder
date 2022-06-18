@@ -2,7 +2,7 @@
 
 public class PaymentAccountCreateUpdateRequest
 {
-	public string Name { get ; set ; }
-	public string  Currency { get ; set ; }
+	public string Name     { get ; set ; } = String.Empty;
+	public string Currency { get ; set ; } = String.Empty ;
 	public decimal Balance  { get ; set ; }
 }

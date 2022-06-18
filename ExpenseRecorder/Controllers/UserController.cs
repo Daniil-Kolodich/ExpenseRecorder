@@ -71,7 +71,8 @@ public class UserController : ControllerBase
 		var userToCreate = _mapper.Map< User >( user ) ;
 		var result       = await _userService.CreateAsync( userToCreate , user.Password ) ;
 
-		if ( !result!.Succeeded ) return BadRequest( result.Errors ) ;
+		if ( result is null ) return BadRequest( "Unable to create user" ) ;
+		if ( !result.Succeeded ) return BadRequest( result.Errors ) ;
 
 		return Ok( _mapper.Map< UserResponse >( userToCreate ) ) ;
 	}
