@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc ;
 
 namespace ExpenseRecorder.Controllers ;
 
-[ Route( "api/[controller]" ) ]
 [ ApiController ]
+[ Route( "[controller]" ) ]
 [ Authorize ]
 public class TransactionController : ControllerBase
 {

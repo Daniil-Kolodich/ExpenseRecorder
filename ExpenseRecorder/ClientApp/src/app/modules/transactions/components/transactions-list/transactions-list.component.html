@@ -1,0 +1,5 @@
+<div *ngIf="transactions">
+	<transactions-list-item
+		*ngFor="let transaction of transactions"
+		[transaction]="transaction"></transactions-list-item>
+</div>

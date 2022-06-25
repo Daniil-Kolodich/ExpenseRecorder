@@ -1,0 +1,7 @@
+<div>
+	<p>{{ transaction.id }}</p>
+	<p>value {{ transaction.amount }} {{ transaction.paymentAccount.currency }}</p>
+	<p>category {{ transaction.category.name }}</p>
+	<p>desc {{ transaction.description }}</p>
+	<p>{{ transaction.date | date }}</p>
+</div>
