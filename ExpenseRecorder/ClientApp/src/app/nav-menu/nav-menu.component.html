@@ -27,18 +27,20 @@
 					>
 						<a [routerLink] = "['/']" class = "nav-link text-dark">Home</a>
 					</li>
+					<li [routerLinkActive] = "['link-active']" class = "nav-item">
+						<a [routerLink] = "['/account']" class = "nav-link text-dark">Account</a>
+					</li>
 					<div *ngIf = "isAuthenticated()">
 						<li [routerLinkActive] = "['link-active']" class = "nav-item">
 							<a [routerLink] = "['/payment_accounts']" class = "nav-link text-dark">PaymentAccounts</a>
 						</li>
+						<li [routerLinkActive] = "['link-active']" class = "nav-item">
+							<a [routerLink] = "['/categories']" class = "nav-link text-dark">Categories</a>
+						</li>
+						<li [routerLinkActive] = "['link-active']" class = "nav-item">
+							<a [routerLink] = "['/transactions']" class = "nav-link text-dark">Transactions</a>
+						</li>
 					</div>
-					<li [routerLinkActive] = "['link-active']" class = "nav-item">
-						<a [routerLink] = "['/account']" class = "nav-link text-dark">Account</a>
-					</li>
-
-					<!--          <li class = "nav-item" [routerLinkActive] = "['link-active']">-->
-					<!--            <a class = "nav-link text-dark" [routerLink] = "['/fetch-data']">Fetch data</a>-->
-					<!--          </li>-->
 				</ul>
 			</div>
 		</div>

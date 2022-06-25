@@ -6,7 +6,9 @@ const PROXY_CONFIG = [
 	{
 		context : [
 			'/User' ,
-			'/PaymentAccount'
+			'/PaymentAccount',
+			'/Category',
+			'/Transaction'
 		] ,
 		target : target ,
 		secure : false ,

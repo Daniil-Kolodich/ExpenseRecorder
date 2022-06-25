@@ -1,0 +1,4 @@
+<div *ngIf = "isInitialized">
+	<button (click) = "onAdd()" class = "btn btn-sm btn-outline-primary">Add category</button>
+	<categories-list [categories] = "categories" (itemClick)="onView($event)" ></categories-list>
+</div>

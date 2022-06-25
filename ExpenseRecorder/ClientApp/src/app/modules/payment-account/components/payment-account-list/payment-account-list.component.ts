@@ -8,6 +8,7 @@ import { PaymentAccountItem } from '../../models/payment-account';
 	templateUrl : './payment-account-list.component.html' ,
 	styleUrls :   [ './payment-account-list.component.scss' ]
 } )
+// TODO : make some shell component for work with service and pass all the data to actual list component
 export class PaymentAccountListComponent implements OnInit {
 	public paymentAccounts : PaymentAccountItem[] | undefined = undefined;
 

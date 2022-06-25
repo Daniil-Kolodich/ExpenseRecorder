@@ -1,0 +1,17 @@
+<div *ngIf = "category !== undefined">
+	<div *ngIf = "!isSimplifiedForm; else simple" class = "col-12">
+		<div class = "er-categories-list-item">
+			<p>id [{{category.id}}] :: name [{{ category.name }}] color [{{ category.color }}
+				]</p>
+			<!--			TODO: think about colors more, maybe insert color as inline style ?-->
+			<img [ngClass] = "['er-categories-list-item__icon','color__' + category.color]"
+			     src = "assets/categories/{{ category.icon }}" alt = "{{ category.icon }}"/>
+		</div>
+	</div>
+
+	<ng-template #simple class = "col-3">
+		<img [ngClass] = "['er-categories-list-item__icon','color__' + category.color]"
+		     src = "assets/categories/{{ category.icon }}" alt = "{{ category.icon }}"/>
+	</ng-template>
+</div>
+

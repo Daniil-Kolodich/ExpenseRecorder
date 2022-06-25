@@ -8,11 +8,13 @@ import { ErrorNotificationService } from '../error-notification.service';
 } )
 export class ErrorNotificationComponent implements OnInit {
 	public isNotificationVisible : boolean = false;
+	public errorMessage: string = '';
 
 	constructor ( private errorNoticationService : ErrorNotificationService ) {
 		this.errorNoticationService.notification.subscribe ( {
 			next : ( value ) => {
 				console.log ( 'Error Notif Component get ' , value );
+				this.errorMessage = value!;
 				this.isNotificationVisible = true;
 				setTimeout ( () => {this.isNotificationVisible = false;} , 5000 );
 			}

@@ -1,0 +1,13 @@
+<div *ngIf="isFormInitialized; else loading" class = "row">
+	<div class = "col-12">
+		<form (ngSubmit) = "onSubmit()" [formGroup] = "form!">
+			<er-input [parentForm] = "form!" controlName = "name" placeholder = "Name for Category"></er-input>
+			<er-input [parentForm] = "form!" controlName = "color" placeholder = "Select Color"></er-input>
+			<er-input [parentForm] = "form!" controlName = "icon" placeholder = "Select Icon"></er-input>
+			<button class = "btn btn-sm btn-outline-info">{{ isCreating ? 'Add' : 'Save' }}</button>
+		</form>
+	</div>
+</div>
+<ng-template #loading>
+	<p>Loading....</p>
+</ng-template>

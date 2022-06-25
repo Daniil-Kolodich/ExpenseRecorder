@@ -9,36 +9,26 @@ import {
 	providedIn : 'root'
 } )
 export class PaymentAccountService {
-
 	constructor ( private http : HttpClient , @Inject ( 'BASE_URL' ) private baseUrl : string ) {}
 
 	public getAll () : Observable<PaymentAccountItem[]> {
-		return this.http.get<PaymentAccountItem[]> ( this.baseUrl + 'PaymentAccount/GetAll' ,
-			{ headers : this.getHeaders () } );
+		return this.http.get<PaymentAccountItem[]> ( this.baseUrl + 'PaymentAccount/GetAll'  );
 	}
 
 	public get ( id : number ) : Observable<PaymentAccountViewItem> {
-		return this.http.get<PaymentAccountViewItem> ( this.baseUrl + 'PaymentAccount/' + id ,
-			{ headers : this.getHeaders () } );
+		return this.http.get<PaymentAccountViewItem> ( this.baseUrl + 'PaymentAccount/' + id );
 	}
 
 	public create ( paymentAccount : PaymentAccountCreateUpdateItem ) : Observable<PaymentAccountViewItem> {
-		return this.http.post<PaymentAccountViewItem> ( this.baseUrl + 'PaymentAccount' , paymentAccount ,
-			{ headers : this.getHeaders () } );
+		return this.http.post<PaymentAccountViewItem> ( this.baseUrl + 'PaymentAccount' , paymentAccount);
 	}
 
 	public update ( paymentAccount : PaymentAccountCreateUpdateItem ,
 		id : number ) : Observable<PaymentAccountViewItem> {
-		return this.http.put<PaymentAccountViewItem> ( this.baseUrl + 'PaymentAccount/' + id , paymentAccount ,
-			{ headers : this.getHeaders () } );
+		return this.http.put<PaymentAccountViewItem> ( this.baseUrl + 'PaymentAccount/' + id , paymentAccount );
 	}
 
 	public delete ( id : number ) : Observable<PaymentAccountItem> {
-		return this.http.delete<PaymentAccountItem> ( this.baseUrl + 'PaymentAccount/' + id ,
-			{ headers : this.getHeaders () } );
-	}
-
-	private getHeaders () : HttpHeaders {
-		return new HttpHeaders ( {} );
+		return this.http.delete<PaymentAccountItem> ( this.baseUrl + 'PaymentAccount/' + id );
 	}
 }

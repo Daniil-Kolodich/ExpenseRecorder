@@ -1,0 +1,7 @@
+<div *ngIf = "category !== undefined" class = "row">
+	<div class = "col-12">
+		<p> {{category!.id}} {{ category!.name }} {{ category!.color }} {{ category!.icon }}</p>
+		<button class = "er-btn" (click)="onEdit()">Edit</button>
+		<button class = "er-btn--secondary" (click)="onBack()">Back</button>
+	</div>
+</div>

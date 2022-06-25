@@ -1,0 +1,85 @@
+.er-categories-list-item {
+	&__icon {
+		width         : 80px;
+		height        : 80px;
+		padding       : 10px;
+		border-radius : 50%;
+		border        : solid 4px black;
+		&[class*='color__'] {
+			background-color : #00ff00;
+		}
+		&.color {
+			&__red {
+				background-color : red;
+			}
+
+			&__green {
+				background-color : green;
+			}
+
+			&__blue {
+				background-color : blue;
+			}
+
+			&__yellow {
+				background-color : yellow;
+			}
+
+			&__orange {
+				background-color : orange;
+			}
+
+			&__purple {
+				background-color : purple;
+			}
+
+			&__pink {
+				background-color : pink;
+			}
+
+			&__brown {
+				background-color : brown;
+			}
+
+			&__black {
+				background-color : black;
+			}
+
+			&__white {
+				background-color : white;
+			}
+
+			&__gray {
+				background-color : gray;
+			}
+
+			&__grey {
+				background-color : grey;
+			}
+
+			&__light-blue {
+				background-color : lightblue;
+			}
+
+			&__light-green {
+				background-color : lightgreen;
+			}
+
+			&__light-yellow {
+				background-color : lightyellow;
+			}
+
+			&__light-pink {
+				background-color : lightpink;
+			}
+
+			&__light-gray {
+				background-color : lightgray;
+			}
+		}
+	}
+}
+
+svg {
+	fill: currentColor;
+}

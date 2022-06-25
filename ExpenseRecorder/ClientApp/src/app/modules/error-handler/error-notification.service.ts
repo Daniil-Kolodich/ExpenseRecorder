@@ -14,6 +14,10 @@ export class ErrorNotificationService {
 	}
 
 	public notify ( error : HttpErrorResponse ) : void {
-		this.errorSubject.next ( error.message );
+		// do some stuff with the error message displayed to the user
+
+		console.log('service get : ',error);
+		let message = error.error?.message ?? error.message;
+		this.errorSubject.next ( message );
 	}
 }

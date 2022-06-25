@@ -16,20 +16,26 @@ import { ErrorNotificationModule } from './modules/error-handler/error-notificat
 import { AccountConfigModule , accountRoutes } from './modules/account/account-config.module';
 import { AuthenticationInterceptor } from './modules/account/authentication.interceptor';
 import { AccountConfigComponent } from './modules/account/account-config.component';
+import { CategoriesRouterComponent , categoriesRoutes } from './modules/categories/categories-router.component';
+import { CategoriesModule } from './modules/categories/categories.module';
+import { TransactionsModule , transactionsRoute } from './modules/transactions/transactions.module';
 
 
 let routes = [
 	{ path : '*' , redirectTo : '' } ,
 	{ path : '' , component : HomeComponent , pathMatch : 'full' } ,
 	{ path : 'account' , component : AccountConfigComponent , children : accountRoutes } ,
-	{ path : 'payment_accounts' , component : PaymentAccountComponent , children : paymentAccountRoutes }
+	{ path : 'payment_accounts' , component : PaymentAccountComponent , children : paymentAccountRoutes } ,
+	{ path : 'categories' , component : CategoriesRouterComponent , children : categoriesRoutes } ,
+	transactionsRoute
 ];
 
 @NgModule ( {
 	declarations :  [
 		AppComponent , NavMenuComponent , HomeComponent , CounterComponent , FetchDataComponent
-		// TODO Extract sign in and sign up as separate module
 	] , imports :   [
+		TransactionsModule ,
+		CategoriesModule ,
 		ErrorNotificationModule ,
 		AccountConfigModule ,
 		PaymentAccountModule ,

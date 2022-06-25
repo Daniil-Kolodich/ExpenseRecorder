@@ -1,0 +1,7 @@
+<div *ngIf = "categories !== undefined" class="row">
+	<categories-list-item
+			*ngFor = "let category of categories"
+			[category] = "category"
+			(click)="onItemClick(category)"
+			class = "col-12"></categories-list-item>
+</div>
