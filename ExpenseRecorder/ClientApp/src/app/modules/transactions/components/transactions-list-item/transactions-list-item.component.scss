@@ -1,79 +1,123 @@
+:host {
+	padding : 6px;
+}
+
 .er-tli {
+	width         : 100%;
+	border-radius : 0 20px 0 0;
+	border-top    : solid 2px red;
+
 	&__top {
-		border-radius    : 30px;
-		border           : solid 3px red;
-		border-bottom    : none;
-		min-height       : 80px;
+		padding          : 12px 6px;
+		border-radius    : inherit;
 		background-color : lightgreen;
 		display          : flex;
-		justify-content  : space-between;
-		padding-bottom   : 10px;
 
 		&__category {
-			padding: 5px 0 5px 10px;
-		}
+			margin-right : auto;
+			display      : flex;
 
-		&__text {
-			display         : flex;
-			flex-direction  : column;
-			justify-content : space-around;
+			&__icon {
+				background-color : lightpink;
+				border-radius    : 50%;
+				width            : 60px;
+				height           : 60px;
+				display          : flex;
+				align-items      : center;
+				justify-content  : center;
+				border           : solid 4px black;
 
-			&__category {
-				max-height : 70%;
-				font-size  : 1.5em;
+				&__img {
+					width  : calc((50% * 1.41) * 0.9);
+					height : calc((50% * 1.41) * 0.9);
+				}
 			}
 
-			&__payment-account {
-				font-size  : 1em;
-				max-height : 30%;
+			&__name {
+				font-size : 1.5rem;
+				margin    : auto 0 auto 12px;
 			}
 		}
 
 		&__amount {
-			text-align : center;
-			font-size  : 2em;
-			color      : #ff0000;
-			margin     : auto 10px auto 0;
+			font-size : 1.75rem;
+			margin    : auto 0;
 		}
 	}
 
+	&__spacer {
+		width            : 100%;
+		height           : 1px;
+		background-color : darkred;
+	}
+
 	&__bottom {
+		min-height : 24px;
 		display    : flex;
-		min-height : 30px;
 
+		&__payment-account {
+			font-size        : 1.2rem;
+			background-color : lightgreen;
+			margin-left      : auto;
+			border-radius    : 0 0 0 6px;
+			border-bottom    : solid 2px red;
+			padding          : 0 12px;
+			max-width: 50%;
+			min-width: 40%;
+			text-align: right;
+		}
 
-		&__text {
-			background-color    : lightgreen;
-			border-radius       : 0 0 15px 15px;
-			border-width        : 4px;
-			border-bottom-color : red;
-			border-bottom-style : solid;
-			width               : 70%;
-			text-align          : center;
+		&__description {
+			white-space      : nowrap;
+			overflow         : hidden;
+			text-overflow    : ellipsis;
+			min-width        : 30%;
+			max-width        : 40%;
+			font-size        : 1rem;
+			text-align       : left;
+			justify-content  : center;
+			padding          : 0 12px;
+			margin-right     : auto;
+			background-color : lightgreen;
+			border-radius    : 0 0 6px 0;
+			border-bottom    : solid 2px red;
 		}
 
 		&__divider {
-			&__left {
-				width            : 15%;
-				background-color : lightgreen;
-
-				&__content {
-					width            : 100%;
-					height           : 100%;
-					border-radius    : 0 15px 0 0;
-					background-color : white;
-				}
+			background-color : lightgreen;
+			width            : 100%;
+			max-width: 60%;
+			min-width: 50%;
+			&::after {
+				position         : relative;
+				left             : 0;
+				top              : 0;
+				width            : 100%;
+				height           : 100%;
+				content          : ' ';
+				display          : inline-block;
+				border-radius    : 0 20px 0 0;
+				background-color : darkgreen;
+				border-top       : solid 2px darkred;
 			}
+		}
+	}
 
-			&__right {
-				width            : 15%;
-				background-color : lightgreen;
 
-				&__content {
-					width            : 100%;
-					height           : 100%;
-					border-radius    : 15px 0 0 0;
-					background-color : white;
+	&__with-description {
+		border-top-left-radius : 20px;
+		.er-tli {
+
+			&__bottom {
+				&__payment-account {
+					max-width: 30%;
+				}
+				&__divider {
+					min-width: 25%;
+					max-width: 30%;
+					&::after {
+						border-top-left-radius : 20px;
+					}
 				}
 			}
 		}
