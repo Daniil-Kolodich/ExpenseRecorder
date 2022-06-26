@@ -1,6 +1,6 @@
 ﻿using ExpenseRecorder.Models.Interfaces ;
 using ExpenseRecorder.SearchHandlers.Options.Interfaces ;
-using LanguageExt.Common ;
+using ExpenseRecorder.Services.Result ;
 
 namespace ExpenseRecorder.Services.Interfaces ;
 

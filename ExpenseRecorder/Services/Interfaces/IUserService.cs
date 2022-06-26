@@ -1,5 +1,5 @@
 ﻿using ExpenseRecorder.Models ;
-using LanguageExt.Common ;
+using ExpenseRecorder.Services.Result ;
 using Microsoft.AspNetCore.Identity ;
 
 namespace ExpenseRecorder.Services.Interfaces ;

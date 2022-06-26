@@ -1,12 +1,11 @@
-﻿using System.Linq.Expressions ;
-using ExpenseRecorder.Exceptions ;
+﻿using ExpenseRecorder.Exceptions ;
 using ExpenseRecorder.Models.Interfaces ;
 using ExpenseRecorder.Repositories.Interfaces ;
 using ExpenseRecorder.SearchHandlers.Options.Interfaces ;
 using ExpenseRecorder.SearchHandlers.Queries.Interfaces ;
 using ExpenseRecorder.Services.Interfaces ;
+using ExpenseRecorder.Services.Result ;
 using ExpenseRecorder.UnitOfWork.Interfaces ;
-using LanguageExt.Common ;
 using Microsoft.EntityFrameworkCore ;
 
 namespace ExpenseRecorder.Services ;

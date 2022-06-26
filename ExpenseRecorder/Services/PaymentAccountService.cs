@@ -1,9 +1,7 @@
-﻿using ExpenseRecorder.Exceptions ;
-using ExpenseRecorder.Repositories.Interfaces ;
+﻿using ExpenseRecorder.Repositories.Interfaces ;
 using ExpenseRecorder.SearchHandlers.Queries.Interfaces ;
 using ExpenseRecorder.Services.Interfaces ;
 using ExpenseRecorder.UnitOfWork.Interfaces ;
-using LanguageExt.Common ;
 
 namespace ExpenseRecorder.Services ;
 
