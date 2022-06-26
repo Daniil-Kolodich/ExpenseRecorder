@@ -66,7 +66,7 @@ public class UserController : ControllerBase
 */
 	[ HttpPost ]
 	[ Route( "register" ) ]
-	public async Task< ActionResult< UserResponse > > Post([ FromBody ] UserCreateUpdateRequest user)
+	public async Task< ActionResult< UserLoginResponse > > Post([ FromBody ] UserCreateUpdateRequest user)
 	{
 		var userToCreate = _mapper.Map< User >( user ) ;
 		var result       = await _userService.CreateAsync( userToCreate , user.Password ) ;
@@ -74,7 +74,7 @@ public class UserController : ControllerBase
 		if ( result is null ) return BadRequest( "Unable to create user" ) ;
 		if ( !result.Succeeded ) return BadRequest( result.Errors ) ;
 
-		return Ok( _mapper.Map< UserResponse >( userToCreate ) ) ;
+		return await Login(_mapper.Map< UserLoginRequest >( user ));
 	}
 
 

@@ -11,7 +11,8 @@ public class UserProfile : Profile
 	{
 		CreateMap< UserCreateUpdateRequest , User >() ;
 		CreateMap< User , UserResponse >() ;
-
+		CreateMap< UserCreateUpdateRequest , UserLoginRequest >() ;
+		
 		CreateMap< UserLoginRequest , User >() ;
 	}
 }
