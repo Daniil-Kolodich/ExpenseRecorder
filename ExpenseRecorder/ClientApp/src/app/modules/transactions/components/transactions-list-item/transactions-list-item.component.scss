@@ -1,0 +1,81 @@
+.er-tli {
+	&__top {
+		border-radius    : 30px;
+		border           : solid 3px red;
+		border-bottom    : none;
+		min-height       : 80px;
+		background-color : lightgreen;
+		display          : flex;
+		justify-content  : space-between;
+		padding-bottom   : 10px;
+
+		&__category {
+			padding: 5px 0 5px 10px;
+		}
+
+		&__text {
+			display         : flex;
+			flex-direction  : column;
+			justify-content : space-around;
+
+			&__category {
+				max-height : 70%;
+				font-size  : 1.5em;
+			}
+
+			&__payment-account {
+				font-size  : 1em;
+				max-height : 30%;
+			}
+		}
+
+		&__amount {
+			text-align : center;
+			font-size  : 2em;
+			color      : #ff0000;
+			margin     : auto 10px auto 0;
+		}
+	}
+
+	&__bottom {
+		display    : flex;
+		min-height : 30px;
+
+
+		&__text {
+			background-color    : lightgreen;
+			border-radius       : 0 0 15px 15px;
+			border-width        : 4px;
+			border-bottom-color : red;
+			border-bottom-style : solid;
+			width               : 70%;
+			text-align          : center;
+		}
+
+		&__divider {
+			&__left {
+				width            : 15%;
+				background-color : lightgreen;
+
+				&__content {
+					width            : 100%;
+					height           : 100%;
+					border-radius    : 0 15px 0 0;
+					background-color : white;
+				}
+			}
+
+			&__right {
+				width            : 15%;
+				background-color : lightgreen;
+
+				&__content {
+					width            : 100%;
+					height           : 100%;
+					border-radius    : 15px 0 0 0;
+					background-color : white;
+				}
+			}
+		}
+	}
+}

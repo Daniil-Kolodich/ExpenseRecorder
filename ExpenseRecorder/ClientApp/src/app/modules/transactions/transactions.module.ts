@@ -7,6 +7,7 @@ import { TransactionItemViewComponent } from './components/transaction-item-view
 import { TransactionCreateEditComponent } from './components/transaction-create-edit/transaction-create-edit.component';
 import { RouterModule } from '@angular/router';
 import { TransactionsListBaseComponent } from './components/transactions-list-base/transactions-list-base.component';
+import { CategoriesModule } from '../categories/categories.module';
 
 const transactionsChildRoutes = [
 	{ path : '*' , redirectTo : '' },
@@ -30,8 +31,8 @@ export const transactionsRoute = {
 		TransactionItemViewComponent ,
 		TransactionCreateEditComponent ,
 		TransactionsListBaseComponent
-	] , imports :  [
-		CommonModule , RouterModule
+	] , imports : [
+		CommonModule , RouterModule , CategoriesModule
 	]
 } )
 export class TransactionsModule {}

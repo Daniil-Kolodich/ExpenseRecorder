@@ -21,6 +21,8 @@ import { CategoryCreateEditComponent } from './components/category-create-edit/c
 		CategoriesListItemComponent ,
 		CategoryItemViewComponent ,
 		CategoryCreateEditComponent
+	] , exports :  [
+		CategoriesListItemComponent
 	] , imports :  [
 		CommonControlsModule , ReactiveFormsModule , CommonModule , RouterModule
 	]

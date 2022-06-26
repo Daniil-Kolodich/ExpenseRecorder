@@ -1,7 +1,29 @@
-<div>
-	<p>{{ transaction.id }}</p>
-	<p>value {{ transaction.amount }} {{ transaction.paymentAccount.currency }}</p>
-	<p>category {{ transaction.category.name }}</p>
-	<p>desc {{ transaction.description }}</p>
-	<p>{{ transaction.date | date }}</p>
+<div class = "er-tli">
+	<div class = "er-tli__top">
+		<div class="er-tli__top__category">
+			<categories-list-item [isSimplifiedForm] = "true" [category] = "transaction.category"></categories-list-item>
+		</div>
+		<div class="er-tli__top__text">
+			<div class="er-tli__top__text__category">
+				{{ transaction.category.name }}
+			</div>
+			<div class="er-tli__top__text__payment-account">
+				{{ transaction.paymentAccount.name }}
+			</div>
+		</div>
+		<div class="er-tli__top__amount">
+			{{ transaction.amount }} {{ transaction.paymentAccount.currency }}
+		</div>
+	</div>
+	<div *ngIf = "!!transaction.description" class = "er-tli__bottom">
+		<div class="er-tli__bottom__divider__left">
+			<div class="er-tli__bottom__divider__left__content"></div>
+		</div>
+		<div class="er-tli__bottom__text">
+			{{ transaction.description }}
+		</div>
+		<div class="er-tli__bottom__divider__right">
+			<div class="er-tli__bottom__divider__right__content"></div>
+		</div>
+	</div>
 </div>

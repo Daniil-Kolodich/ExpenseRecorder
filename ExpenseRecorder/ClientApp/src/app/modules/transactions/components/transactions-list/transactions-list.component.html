@@ -1,5 +1,6 @@
-<div *ngIf="transactions">
+<div *ngIf="transactions" class="row">
 	<transactions-list-item
 		*ngFor="let transaction of transactions"
-		[transaction]="transaction"></transactions-list-item>
+		[transaction]="transaction"
+		class="col-12 col-sm-6 col-lg-4"></transactions-list-item>
 </div>
